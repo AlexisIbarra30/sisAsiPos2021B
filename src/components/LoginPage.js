@@ -117,7 +117,7 @@ export default class LoginPage extends React.Component {
                     {!this.state.ready?<CentralLoader/>: 
                     <>
                         <a href="https://www.uaemex.mx/" target="_blank" rel="noreferrer">
-                            <img src='./images/logo.png' className='loginImage' alt="UAEMex Logo"/>
+                            <img src='images/logo.png' className='loginImage' alt="UAEMex Logo"/>
                         </a>
                         <h2 className='loginTitle'>Sistema de Registro de Asistencia</h2>
                         <h3 className='loginTitle'> Iniciar sesión </h3>

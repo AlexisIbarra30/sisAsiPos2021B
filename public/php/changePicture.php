@@ -12,14 +12,15 @@
         $nombre = "image0".$id;
     	
     	//ruta destino: IMPORTANTE Cambiar a ruta PUBLIC para deploy
-    	$destino="../images/profiles/".$nombre.".".$extension;
+    	$destinoUp="../images/profiles/".$nombre.".".$extension;
+        $destino="images/profiles/".$nombre.".".$extension;
         //$destino="../../../".$nombre.".".$extension;
     	//guardamos la ruta en la BD
         $con = conectar();
         $query = "UPDATE usuarios SET picture_url='".$destino."' where id='".$id."'";
         if(mysqli_query($con,$query)){
             mysqli_close($con);
-            move_uploaded_file($nombreTemp, $destino);
+            move_uploaded_file($nombreTemp, $destinoUp);
             $json = array("respuesta"=>"correcto","nueva_ruta"=>$destino);
             echo(json_encode($json));
         }

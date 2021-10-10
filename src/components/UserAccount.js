@@ -139,15 +139,17 @@ export default class UserAccount extends React.Component{
                 .then(resultado=>{
                     if(resultado.respuesta=="correcto"){
                         let limite = resultado.nueva_ruta.length;
-                        let ruta = resultado.nueva_ruta.substring(3,limite);
+                        let ruta = resultado.nueva_ruta;
                         this.setState({current_foto_url:ruta,preview_foto_url:ruta,render_btn:false});
                         //Cambiamos sessionStorage
                         let respaldo = JSON.parse(sessionStorage.getItem("USER"));
                         respaldo.picture_url = this.state.current_foto_url;
                         sessionStorage.setItem("USER",JSON.stringify(respaldo));
-                        alert("Foto cambiada correctamente ");
+                        alert("foto cambiada correctamente");
+                        window.location.reload();
                     }
                 });
+                
         }
     }
 

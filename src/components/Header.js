@@ -60,11 +60,11 @@ export default class Header extends React.Component{
                 <div className='header__container'>
                     <div className="header_logos">
                         <a href="https://www.uaemex.mx/" target="_blank" rel="noreferrer">
-                            <img src='./images/logo.png' alt="UAEMex Logo"/>
+                            <img src='images/logo.png' alt="UAEMex Logo"/>
                         </a>
                         <h3>Sistema de Registro de Asistencias</h3>
                         <a href="http://fingenieria.uaemex.mx/portal/inicio/home.php" target="_blank" rel="noreferrer">
-                            <img src='./images/fingenieria-min.png' alt="Facultad Ingenieria UAEMex"/>
+                            <img src='images/fingenieria-min.png' alt="Facultad Ingenieria UAEMex"/>
                         </a>
                     </div>
                 </div>
