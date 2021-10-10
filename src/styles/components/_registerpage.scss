@@ -1,0 +1,262 @@
+.container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.dropZone {
+    margin-top: 2.5rem;
+    width: 85vw;
+    height: 40vh;
+    border: 1px solid gray;
+    border-radius: 0.7rem;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: normal;
+    margin-left: 15px;
+}
+
+.titleContainer {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.form-Item{
+    font-size: 20px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Panel {
+    width:90%;
+    margin-top:1em;
+    padding:1em;
+    border:0.1em dotted #999;
+    display: flex;
+    justify-content: center;
+}
+
+.panel123 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.asistencias {
+    margin: 0px auto;
+}
+
+.registerImage {
+    width: 32px;
+    height: 32px;
+}
+
+.registerText {
+    font-weight: normal;
+    padding: 2rem;
+    text-align: center;
+}
+
+.registerItem {
+    align-items: center;
+    margin-top: 1rem;
+    width: 85vw;
+    border: 1px solid gray;
+    border-radius: 0.7rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.imageContainer {
+    align-items: center;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+
+.registerimage {
+    padding-left: 25px;
+    padding-right: 30px;
+}
+
+.registerItem > button {
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.registerItem > button:hover {
+    color:  darkcyan;
+}
+
+.registerAsistencias {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 85vw;
+    height: 7vh;
+    border-radius: 7px;
+    color: white;
+    outline: none;
+    background-image: linear-gradient(315deg, #63d471 0%, #0a7533 74%);
+}
+
+.registerAsistencias:disabled{
+    opacity: 0.5;
+}
+
+.registerHeader {
+    width: 85vw;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-weight: normal;
+    font-size: 1.5rem;
+    border: 1px solid gray;
+    border-radius: 7px;
+}
+
+
+//agregados
+.tablaScroll{
+    height:55vh;
+    overflow-y: scroll;
+}
+.btnBox{
+    margin: 2rem 2rem;
+    width:85vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.registerBack:disabled{
+    cursor:progress;
+    opacity: 0.5;
+}
+
+//fin agregados
+.registerHeader > h3 {
+    font-weight: normal;
+    font-size: 1.5rem;
+    //agregados para centrar contenido que se muestra
+    width:calc(100%/6);
+    text-align: center;
+}
+
+.registerHEader {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    width: 85vw;
+    height:auto;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    font-weight: normal;
+    font-size: 1.5rem;
+    border: 1px solid gray;
+    border-radius: 7px;
+}
+
+.registerHEader > h3 {
+    font-weight: normal;
+    font-size: 1.5rem;
+    //agregados para centrar contenido que se muestra
+    width:20%;
+    text-align: center;
+}
+.registerHEader .buttonBorrar{
+    width:20%;
+}
+.registerHEader .foto{
+    width:20%;
+    margin:1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.regHeader .foto img{
+    width:12rem;
+    height: 12rem;
+    border-radius: 50%;
+}
+
+.registerBack {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    width: 40vw;
+    height: 6vh;
+    border-radius: 7px;
+    color: white;
+    background-image: linear-gradient(315deg, #63d471 0%, #0a7533 74%);
+    border: 1px solid gray;
+    outline: none;
+    justify-items: right;
+    background-color: #0a7533;
+}
+
+.formItem {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.horas {
+    width: 25%;
+    padding-left: 1.5rem;
+    color: #0a7533;
+}
+
+.hours {
+    padding-left: 0.5rem;
+    color: #0a7533;
+}
+
+.reg {
+    width: 65vw;
+}
+
+.regHeader {
+    margin-right: 1.5rem;
+}
+.textBold h3{
+    font-weight: bold;
+}
+
+.buttonBorrar{
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+}
+.buttonBorrar button{
+    color:#fff;
+    padding:1rem;
+    border-radius:7px;
+    background-color: #0a7533;
+    background-image: linear-gradient(315deg, #63d471 0%, #0a7533 74%);
+    border: 1px solid gray;
+    outline: none;
+}
+
+.buttonBorrar button:hover, .registerBack:hover{
+    background-image: none;
+    background-color:rgba(10, 117, 51, 0.7);
+    transition:0.5s;
+}
+.form-item-calendar{
+    align-items: center;
+    display: flex;
+}
+.form-item-calendar>*{
+    width:50%;
+    border: none;
+}

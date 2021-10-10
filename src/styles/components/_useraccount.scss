@@ -1,0 +1,138 @@
+.userConfig-container{
+    width:50%;
+    display: flex;
+    flex-direction: column;
+}
+.userConfig-info{
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    align-items: center;
+    height:30vh;
+}
+.userConfig-picture{
+    box-sizing: border-box;
+    width:30vh;
+    height:100%;
+    background-color: transparent;
+    border:0.5rem solid #999;
+    cursor: pointer;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+}
+.userConfig-picture .modal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.5);
+    position: absolute;
+    width:100%;
+    top:100%;
+    border-radius: 50%;
+    transition: 0.3s ease;
+    color:#fff;
+    height:100%;
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: bold;
+}
+.userConfig-picture .modal .icono-foto{
+    font-size: 3rem;
+}
+.userConfig-picture:hover .modal{
+    top:0;
+    height: 100%;
+}
+
+.inputfile-picture{
+    width:100%;
+    height: 100%;
+    position: absolute;
+    background-color:transparent;
+    color:transparent;
+    cursor: pointer;
+    opacity: 0;
+}
+
+.userConfig-picture img{
+    position: relative;
+    width:80%;
+    border-radius: 50%;
+}
+
+.userConfig-data{
+    width:50%;
+    box-sizing: border-box;
+    padding:1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height:30vh;
+}
+
+.userConfig-opciones .small-btn{
+    width:100%;
+}
+.formChangePass{
+    display: flex;
+    flex-direction: column;
+}
+.formChangePass .item{
+    display: flex;
+    margin:1rem 0;
+    justify-content: center;
+}
+.formChangePass .item label{
+    width:40%;
+}
+.item input[type=password]{
+    padding:0.5rem;
+    border-radius: .7rem;
+    border: .1rem solid rgb(34, 100, 112);
+}
+.item input[type=password]:hover,.item input[type=password]:focus{
+    border: 0.1rem solid #2EA44F;
+    box-shadow: 2px 2px 5px darken(#2EA44F, .7);
+    outline: none;
+}
+.formChangePass-buttons{
+    display: flex;
+    justify-content: space-around;
+    margin:1rem 0;
+}
+.formChangePass-buttons > *{
+    width:35%;
+}
+.btn-picture{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 3rem;
+}
+.confirm-picture{
+    color:#2EA44F;
+    box-sizing: border-box;
+    margin:0.4rem 0;
+    cursor: pointer;
+}
+.cancel-picture{
+    box-sizing: border-box;
+    color:red;
+    margin:0.4rem 0;
+    cursor:pointer;
+}
+.btn-picture span{
+    box-sizing: border-box;
+    padding:0.1rem;
+    line-height: 0;
+}
+.btn-picture span:hover{
+    box-sizing: border-box;
+    padding:0;
+    line-height: 0;
+    box-shadow:-1px -1px 1px 1px #000;
+    border-radius: 50%;
+}

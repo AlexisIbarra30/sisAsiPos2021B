@@ -1,0 +1,186 @@
+.menu-navegacion{
+    background-image: linear-gradient(315deg, #63d471 0%, #0a7533 40%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:auto;
+}
+
+.menu-item{
+    padding:1em;
+    color:#fff;
+    display: flex;
+    cursor:pointer;
+}
+
+.menu-item:hover{
+    background-color: rgba(255,255,255,0.2);
+}
+
+.drop-menu-item{
+    position: relative;
+}
+.drop-menu-item-info{
+    position: relative;
+}
+.drop-menu-item-info>span{
+    border-right: thin solid #999;
+    padding-right: 0.5rem;
+    margin-right: 0.5rem;
+}
+.drop-menu-item-options{
+    position: absolute;
+    left: 0;
+    background-image: linear-gradient(315deg, #63d471 0%, #0a7533 40%);
+    border-radius:5px;
+    display: none;
+    top:5rem;
+    transition: 1s ease;
+}
+
+.drop-menu-item:hover>.drop-menu-item-options{
+    display: block;
+    z-index: 1;
+}
+
+.panel{
+    width:90%;
+    margin-top:1em;
+    padding:1em;
+    border:0.1em dotted #999;
+    display: flex;
+    justify-content: center;
+}
+
+//Estilos para formularios de Administrador
+.formAddUser{
+    display: flex;
+    flex-direction: column;
+    width:45%;
+    margin-left:5%;
+    justify-content: space-between;
+    min-height: 50vh;
+}
+.nomargin{
+    margin:0;
+    width:40%;
+}
+.smallbtn{
+    width:100%;
+    display: flex;
+    justify-content: space-around;
+    margin:0.5em 0;
+
+}
+.form-item{
+    display: flex;
+    justify-content: space-between;
+    margin:1rem 0;
+}
+.formAddUser h3, .formModifUser h3{
+    width:100%;
+    text-align: center;
+}
+.formAddUser .text50,.formAddUser label{
+    padding:0.3em;
+    width:50%;
+}
+.formAddUser .text50, .campoPass{
+    border-radius: .7rem;
+    border: .1rem solid rgb(34, 100, 112);
+}
+.formAddUser .text50:hover,.formAddUser .text50:focus, .campoPass:hover, .campoPass:focus{
+    border: 0.1rem solid #2EA44F;
+    box-shadow: 2px 2px 5px darken(#2EA44F, .7);
+    outline: none;
+}
+
+.more-width{
+    width:100%;
+}
+
+.radios{
+    display: flex;
+    flex-flow: row wrap;
+    width:54%;
+}
+
+
+.radio-item{
+    width: 100%;
+    padding:0.4rem 0;
+    cursor: pointer;
+}
+.radio-item input, .radio-item label{
+    cursor:pointer;
+}
+
+.formModifUser{
+    min-height: 65vh;
+    display: flex;
+    flex-direction: column;
+    width:45%;
+    margin-left:5%;
+}
+.form-header{
+    margin-bottom:2em;
+}
+.modifuser{
+    width:100%;
+    margin:0;
+}
+
+.formDelUser{
+    width:50%;
+}
+
+.formDelUser h3{
+    width:100%;
+    text-align: center;
+}
+.formDelUser label{
+    display: flex;
+    align-items: center;
+}
+.morespace{
+    margin:0.5em 0;
+}
+.form-item select{
+    width:55%;
+}
+.campoPass{
+    padding:0.2rem;
+    width:45%;
+}
+.verPass{
+    width:5%;
+    text-align: center;
+    padding:0;
+    background-color:#0a7533;
+    border:0;
+    color:#fff;
+}
+.verPass:hover{
+    background-color:rgba(10, 117, 51, 0.7);
+    transition:0.5s;
+}
+.borderError{
+    border:thin solid #DC3545;
+}
+.datesRange{
+    display: flex;
+}
+.datesRange .react-datepicker__input-container{
+    font-size: 1.5rem;
+    width: 60%;
+}
+
+//Responsive
+@media screen and (max-width:940px){
+    .menu-navegacion{
+        font-size: 1.4rem;
+    }
+    .drop-menu-item-options{
+        top:4.5rem;
+    }
+}

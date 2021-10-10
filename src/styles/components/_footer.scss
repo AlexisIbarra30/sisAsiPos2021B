@@ -1,0 +1,62 @@
+footer{
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #103b1b;
+    color:#fff;
+    font-size:0.7em;
+    display: flex;
+    justify-content: space-between;
+    border-top:0.8em solid #1f8639;
+    padding:2em;
+    text-align: justify;
+    font-weight: bold;
+    margin-top:3em;
+}
+
+//Datos de la pagina
+footer .datos-footer{
+    display: flex;
+    flex-direction: column;
+    width:30%;
+}
+
+footer .datos-footer .item-datos-footer{
+    display: flex;
+    margin: 0.8em;
+    justify-content: space-between;
+}
+footer .datos-footer .item-datos-footer span{
+    width:45%;
+}
+
+//Logo de facebook
+footer .social-footer{
+    width:30%;
+    text-align: center;
+}
+footer .social-footer a img{
+    width:20%;
+}
+footer .social-footer a img:hover{
+    width:22%;
+    transition: 0.5s;
+}
+
+//Paginas de interes
+footer .webs-footer{
+    width:30%;
+}
+footer .webs-footer ul li{
+    margin-bottom: 1em;
+}
+footer .webs-footer ul li a:hover{
+    color:#656913;
+    transition: 0.5s;
+}
+footer .webs-footer ul li a{
+    text-decoration: none;
+    color:#fff;
+}
+
+
+

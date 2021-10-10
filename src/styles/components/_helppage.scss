@@ -1,0 +1,17 @@
+.help-item{
+    margin:0 0 2em 0;
+    padding:1em;
+    border: 1px dotted #999;
+    align-self: flex-start;
+    width:80%;
+    margin-left: 10%;
+}
+.help-item iframe{
+    width:70%;
+    margin-left:15%;
+}
+.help-container{
+    display: flex;
+    flex-direction: column;
+    width:80%;
+}

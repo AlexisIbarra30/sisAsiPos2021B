@@ -1,0 +1,110 @@
+.container{
+    display: flex;
+    justify-content: center;
+}
+
+.loginContainer {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width:50%;
+    height: 100vh;
+}
+
+
+.loginForm {
+    padding-top: 3rem;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    background-color: lighten(#F6F8FA, .8);
+    border-radius: .7rem;
+    box-shadow: 5px 5px 2px darken(#F6F8FA, 1);
+    font-size: 1.4rem;
+    font-weight: bold;
+    width: 350px;
+    padding-right: 2.7rem;
+}
+
+.loginInput {
+    border: .1rem solid rgb(34, 100, 112);
+    border-radius: .7rem;
+    width: 80%;
+    height: 30px;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.loginInput:focus {
+    //border: .1rem solid rgb(34, 100, 112);
+    border: 0.1rem solid #2EA44F;
+    box-shadow: 2px 2px 5px darken(#2EA44F, .7);
+    outline: none;
+}
+
+.loginInput:hover {
+    //border: .1rem solid rgb(34, 100, 112);
+    border: 0.1rem solid #2EA44F;
+    //box-shadow: 2px 2px 5px darkcyan;
+    box-shadow: 2px 2px 5px darken(#2EA44F, .7);
+    outline: none;
+}
+
+.loginText {
+    padding-left: 2.5rem;
+    text-align: left;
+}
+
+.loginTitle {
+    margin: 1rem;
+    text-align: center;
+    width:100%;
+}
+
+.loginButton {
+    margin-top: 3rem;
+    width: 90%;
+    height: 35px;
+    margin-bottom: 1rem;
+    border: 0.1rem solid #2EA44F;
+    border-radius: .7rem;
+    background-image: linear-gradient(to right, #2EA44F, darken(#2EA44F, .5));
+    color: whitesmoke;
+    font-size: 1.4rem;
+}
+
+.loginButton:focus {
+    outline: none;
+}
+
+.loginButton:hover {
+    box-shadow: 3px 3px 5px gray;
+}
+
+.recaptcha {
+    width: 272px;
+}
+
+.separador {
+    height: 30px;
+}
+
+.optionContainer {
+    padding-left: 2.5rem;
+    width: 100%;
+}
+.loginError{
+    margin:0;
+}
+.loginError p{
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #DC3545;
+    color:#fff;
+    text-align: center;
+    padding:0.5rem;
+    margin: 0;
+}

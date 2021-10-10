@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Blinker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+@import './base/settings.scss';
+@import './base/base';
+@import './components/loginpage';
+@import './components/header';
+@import './components/registerpage';
+@import './components/adminpage';
+@import './components/footer';
+@import './components/helppage';
+@import './components/formmodiffooter';
+@import './components/programaspage';
+@import './components/datepicker';
+@import 'react-datepicker/dist/react-datepicker.css';
+@import './components/useraccount';
+@import './components/centralLoader';
