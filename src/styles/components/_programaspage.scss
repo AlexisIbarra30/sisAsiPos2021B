@@ -38,3 +38,18 @@
     box-shadow: 2px 2px 5px darken(#2EA44F, .7);
     outline: none;
 }
+
+@media screen and (max-width:630px){
+    .programas-container{
+        width:98%;
+        box-sizing: border-box;
+        font-size: 1.2rem;
+    }
+    .seccion-programas-item > input[type=number],.programas-container .seccion-programas-item span,.programas-container .subtitulos span{
+        width: 20%;
+    }
+    .programas-container .subtitulos, .programas-container .seccion-programas-item{
+        justify-content: space-around;
+    }
+
+}

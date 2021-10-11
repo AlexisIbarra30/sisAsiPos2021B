@@ -119,7 +119,7 @@
     min-height: 65vh;
     display: flex;
     flex-direction: column;
-    width:45%;
+    width:50%;
     margin-left:5%;
 }
 .form-header{
@@ -176,11 +176,36 @@
 }
 
 //Responsive
-@media screen and (max-width:940px){
+@media screen and (max-width:900px){
     .menu-navegacion{
         font-size: 1.4rem;
     }
     .drop-menu-item-options{
         top:4.5rem;
+    }
+    .formAddUser,.formModifUser{
+        width:70%;
+    }
+    .formModifUser .formAddUser{
+        width:100%;
+    }
+}
+@media screen and(max-width:630px) {
+    .container{
+        font-size: 1.3rem;
+    }
+    .menu-navegacion{
+        width: 100%;
+        font-size:1.2rem;
+        
+    }
+    .menu-item{
+        padding:0.8rem;
+    }
+    .drop-menu-item-options{
+        top:3.1rem;
+    }
+    .formAddUser,.formModifUser{
+        width:98%;
     }
 }

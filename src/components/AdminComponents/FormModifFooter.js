@@ -139,7 +139,7 @@ export default class FormModifFooter extends React.Component {
                 <h3>Modificar pie de pagina</h3>
                 <div className="seccion">
                     <div className="subtitulo"><h4>Información del sitio: </h4></div>
-                    <div className="seccion-item">
+                    <div className="seccion-item subtitulos">
                         <span className="subtitulo">Nombre</span>
                         <span className="subtitulo">Direccion URL</span>
                     </div>
@@ -158,7 +158,7 @@ export default class FormModifFooter extends React.Component {
 
                 <div className="seccion">
                     <div className="subtitulo"><h4>Sitios de interes: </h4></div>
-                    <div className="seccion-item"><span className="subtitulo">Nombre</span><span span className="subtitulo">Direccion URL</span></div>
+                    <div className="seccion-item subtitulos"><span className="subtitulo">Nombre</span><span span className="subtitulo">Direccion URL</span></div>
                     {datos3}
                     <div className="caja-nuevo-dato">
                         <span className="agregar-titulo">Agregar nuevo: </span>

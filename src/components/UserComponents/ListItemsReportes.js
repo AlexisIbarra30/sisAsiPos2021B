@@ -3,7 +3,7 @@ import React from 'react';
 const ListItemReportes = (props) => {
     if(props.total_horas) {
         return(
-            <div className='registerHEader reg'>
+            <div className='registerHEader reg repTablaUsr'>
                 <h3> {props.nombre} </h3>
                 <h3> {props.apellidos} </h3>
                 <h3> {props.fecha_inicio} </h3>
@@ -13,7 +13,7 @@ const ListItemReportes = (props) => {
         );
     }else{
         return(
-            <div className='registerHEader reg'>
+            <div className='registerHEader reg repTablaUsr'>
             <h3> {props.nombre} </h3>
             <h3> {props.apellidos} </h3>
             <h3> {props.fecha_inicio} </h3>

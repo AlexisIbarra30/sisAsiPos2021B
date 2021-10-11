@@ -145,7 +145,7 @@ export default class UserAccount extends React.Component{
                         let respaldo = JSON.parse(sessionStorage.getItem("USER"));
                         respaldo.picture_url = this.state.current_foto_url;
                         sessionStorage.setItem("USER",JSON.stringify(respaldo));
-                        alert("foto cambiada correctamente");
+                        alert("Foto cambiada correctamente");
                         window.location.reload();
                     }
                 });

@@ -102,7 +102,7 @@ class ReportesPage extends React.Component {
         //texto: #FFFFFF
         doc.setFontSize(18);
         doc.text(`Cordinacion de Estudios Avanzados`, 50,50);
-        doc.text(`Registro de asistencias, de ${moment(this.state.startDate).format("DD/MM/YYYY")} hasta ${moment(this.state.endDate).format("DD/MM/YYYY")}`, 30,60);
+        doc.text(`Registro de asistencias del periodo ${moment(this.state.startDate).format("DD/MM/YYYY")} al ${moment(this.state.endDate).format("DD/MM/YYYY")}`, 20,60);
         doc.setFontSize(10);
         //doc.cell(5, 70, 200, 300,'  Nombre        Apellidos            Fecha Inicio      Fecha Final      Horas Totales  ', 1);
         doc.cell(15,70,45,10,'Nombre',5,'c');
@@ -152,7 +152,7 @@ class ReportesPage extends React.Component {
 
                 <div className='panel123'>
                     <div className='container'>
-                        <div className="form-Item">
+                        <div className="form-Item usr-reps-title">
                             <label style={{margin: 30}}> Rango en que seran generados: </label>
                             {/*<DateRangePicker
                                 startDate={this.state.startDate} // momentPropTypes.momentObj or null,
@@ -211,7 +211,7 @@ class ReportesPage extends React.Component {
                             
 
                         </div>
-                        <div className='registerHeader reg regHeader'>
+                        <div className='registerHeader reg regHeader repTablaUsr'>
                             <h3> Nombre </h3>
                             <h3> Apellidos </h3>
                             <h3> Fecha Inicio </h3>

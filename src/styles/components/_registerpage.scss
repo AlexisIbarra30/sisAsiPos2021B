@@ -260,3 +260,28 @@
     width:50%;
     border: none;
 }
+
+
+
+//Responsive
+@media screen and(max-width:900px) {
+    .tabla h3, .tabla span,.buttonBorrar button{
+        font-size: 1.2rem;
+    }
+    .tabla span{
+        text-align: center;
+    }
+    .regHeader .foto img{
+        width:6rem;
+        height:6rem;
+    }
+    .repTablaUsr{
+        width:80vw;
+    }
+    .form-Item label{
+        font-size: 1.3rem;
+    }
+    .repTablaUsr h3{
+        font-size:1.2rem;
+    }
+}

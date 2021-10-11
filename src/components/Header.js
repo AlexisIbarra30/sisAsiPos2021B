@@ -55,7 +55,7 @@ export default class Header extends React.Component{
 
     render() {
         return (
-        <div>
+        <div className="headerBgImage" style={{backgroundImage:`url('images/fi_background.jpg')`}}>
             <div className='header'>
                 <div className='header__container'>
                     <div className="header_logos">
@@ -79,17 +79,6 @@ export default class Header extends React.Component{
                 </div>
 
                 <div className="userMenu">
-                    {/*<div className='userMenu-item'>
-                        <button className='headerImages'><img className='headerImages' src='./images/user.svg' alt="user logo"/></button>
-                        <p className='logoutText'>Bienvenido de vuelta: {this.state.name}</p>
-                    </div>
-                    <div className='userMenu-item'>
-                        <span className="logoutText">{this.state.programa}</span>
-                    </div>
-                    <div className='userMenu-item'>
-                        <button onClick={this.handleClose} className='headerImages'><img className='headerImages' src='./images/logout.svg' alt="logout logo"/></button>
-                        <p onClick={this.handleClose} className='logoutText'>Cerrar sesion</p>
-                    </div>  */}
                     <div>
                         <div className="drop-options">
         

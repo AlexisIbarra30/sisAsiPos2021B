@@ -112,7 +112,7 @@ export default class LoginPage extends React.Component {
 
     render() {
         return (
-            <div className="container">                
+            <div className="container loginbg" style={{backgroundImage:`url('images/fi_background.jpg')`}}>                
                 <div className='loginContainer'>
                     {!this.state.ready?<CentralLoader/>: 
                     <>
@@ -146,7 +146,7 @@ export default class LoginPage extends React.Component {
                                             ref={recaptchaRef}
                                             sitekey="6Ld-5V4cAAAAALyV-dtix6bash2w0rJn6ykgBRDh"
                                             onChange={this.onChange}
-                                            theme='light'
+                                            theme='ligth'
                                             size='normal'
                                         />
                                         </div>

@@ -4,6 +4,7 @@ import { createBrowserHistory,createHashHistory } from 'history';
 import LoginPage from '../components/LoginPage';
 import AdminPage from '../components/AdminPage';
 import UserPage from '../components/UserPage';
+import Error004 from '../components/Error404';
 import * as constantes from '../components/Constantes';
 
 export const history = createHashHistory();
@@ -13,6 +14,7 @@ const AppRouter = () => (
             <Route exact path='/' component={LoginPage} />
             <Route path='/admin' component={AdminPage} />
             <Route path='/user' component={UserPage} />
+            <Route path='*' component={Error004} />
         </Switch>
     </HashRouter>
     
