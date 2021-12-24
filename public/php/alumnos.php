@@ -6,6 +6,10 @@
 	 	case 'GET':
 	 		//Si no recibe parametros, regresa todos los nombres de alumnos
 	 		$con = conectar();
+			
+			 //agregado
+			mysqli_set_charset($con,"utf8");
+
 	 		$query = "select nombre,apellidos from asistencias where programa='".$_GET['programa']."' group by nombre";
 	 		$res=mysqli_query($con,$query);
             $json= array();

@@ -12,6 +12,10 @@
 
 		case 'GET':
 			$con = conectar();
+
+			//agregado
+			mysqli_set_charset($con,"utf8");
+
 			$query ="SELECT programa_nombre,lim_inferior,lim_superior from programas where id !=0";
 			$json = array();
 			$res = mysqli_query($con,$query);
@@ -27,6 +31,9 @@
 			$_POST = json_decode(file_get_contents('php://input'),true);
 			$iteracion = 1;
 			$con = conectar();
+
+			//agregado
+			mysqli_set_charset($con,"utf8");
 
 			while($iteracion<5){
 				$lim1 ="r".$iteracion."i";

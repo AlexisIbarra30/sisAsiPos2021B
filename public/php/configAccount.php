@@ -17,6 +17,10 @@
     		//Consultamos si existe usuario con esa contraseña actual
     		$query = 'SELECT * from usuarios where id="'.$id.'" and password="'.$a_pass.'"';
     		$con = conectar();
+
+			//agregado
+			mysqli_set_charset($con,"utf8");
+
     		$res = mysqli_query($con,$query);
     		if(mysqli_num_rows($res)>0){
     			//Existe la cuenta

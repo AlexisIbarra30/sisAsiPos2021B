@@ -17,6 +17,10 @@
         //$destino="../../../".$nombre.".".$extension;
     	//guardamos la ruta en la BD
         $con = conectar();
+
+        //agregado
+		mysqli_set_charset($con,"utf8");
+
         $query = "UPDATE usuarios SET picture_url='".$destino."' where id='".$id."'";
         if(mysqli_query($con,$query)){
             mysqli_close($con);

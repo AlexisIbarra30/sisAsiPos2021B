@@ -10,9 +10,13 @@
 	*/
 
 	switch($_SERVER['REQUEST_METHOD']){
-		
+	
 		case 'GET':
 			$con = conectar();
+			
+			//agregado
+			mysqli_set_charset($con,"utf8");
+
 			$query = 'SELECT * from datos_footer';
 			$res = mysqli_query($con,$query);
 			$json = array();
@@ -30,7 +34,9 @@
 			$_POST = json_decode(file_get_contents('php://input'),true);
 			$con = conectar();
 			$respuesta="";
-
+			
+			//agregado
+			mysqli_set_charset($con,"utf8");
 
 			//Si no define en que parte se mostrara significa que solo va a actualizar el campo
 			if(!isset($_POST['mostrar']) and !isset($_POST['eliminar'])){

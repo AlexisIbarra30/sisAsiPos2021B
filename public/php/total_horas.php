@@ -28,6 +28,10 @@
 
             //Conectamos y Ejecutamos la consulta
             $con=conectar();
+
+            //agregado
+			mysqli_set_charset($con,"utf8");
+
             $res = mysqli_query($con,$query);
             //Generamos JSON
             if(mysqli_num_rows($res)==0){

@@ -32,6 +32,9 @@
 			if(isset($_POST['nombre']) and isset($_POST['apellidos']) and isset($_POST['usuario']) and isset($_POST['password']) and isset($_POST['tipo_usuario']) ){
 				$con = conectar();
 
+				//agregado
+				mysqli_set_charset($con,"utf8");
+
 				//verificamos que no exista ya el usuario (ver si no se repite el nombre o el usuario)
 				$query = "SELECT * from usuarios where nombre like '".$_POST['nombre']."' and apellidos like '".$_POST['apellidos']."' and usuario = '".$_POST['usuario']."'";
 				$res = mysqli_query($con,$query);
@@ -75,6 +78,10 @@
 			if(isset($_GET['usuario']) and isset($_GET['password'])){
 				//Validar usuario para login: devolver {valido:true/false}
 				$con = conectar();
+
+				//agregado
+				mysqli_set_charset($con,"utf8");
+
 				$query = "select * from usuarios where usuario='".$_GET['usuario']."' and password ='".$_GET['password']."'";
 				$json = array();
 
@@ -101,6 +108,10 @@
 			}else if(isset($_GET['id']) and !isset($_GET['nombre']) and !isset($_GET['apellidos']) and !isset($_GET['usuario']) and !isset($_GET['password'])){
 				//Si solo viene el ID en metodo GET, significa que borrará al usuario
 				$con = conectar();
+				
+				//agregado
+				mysqli_set_charset($con,"utf8");
+
 				$query = "DELETE from usuarios where id=".$_GET['id'];
 				mysqli_query($con,$query);
 				mysqli_close($con);
@@ -109,6 +120,10 @@
 			else{
 				//Si no viene ninguna variable, devolver todos los usuarios
 				$con = conectar();
+
+				//agregado
+				mysqli_set_charset($con,"utf8");
+				
 				$query ="SELECT usuarios.id as id,nombre,apellidos,usuario,programa_nombre,programa,password,tipo_usuario,picture_url from usuarios inner join programas where programas.id = usuarios.programa";
 				$json = array();
 

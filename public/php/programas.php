@@ -7,6 +7,10 @@
 
 		case 'GET':
 			$con = conectar();
+
+			//agregado
+			mysqli_set_charset($con,"utf8");
+
 			$query = "SELECT id,programa_nombre FROM programas";
 			$res = mysqli_query($con,$query);
 			$json = array();

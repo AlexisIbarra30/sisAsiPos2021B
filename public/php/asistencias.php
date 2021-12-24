@@ -14,6 +14,10 @@
             $_POST = json_decode(file_get_contents('php://input'),true);
 
             $con = conectar();
+
+            //agregado
+			mysqli_set_charset($con,"utf8");
+
             //Recorremos JSON para realizar insersiones/verificar datos repetido
             foreach($_POST as $reg){
 
@@ -48,6 +52,10 @@
 
         case 'GET':
             $con=conectar();
+
+            //agregado
+			mysqli_set_charset($con,"utf8");
+
             $query="";
 
             //Primer caso, no se define rango de fecha: devuelve todo
@@ -69,6 +77,10 @@ function definePrograma($id){
     //Sabemos que solo hay 4 programas, asi que solo puede ser ID = 1,2,3 o 4
 
     $con2 = conectar();
+
+    //agregado
+	mysqli_set_charset($con2,"utf8");
+
     $i = 1;
 
     while($i<5){

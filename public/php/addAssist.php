@@ -12,6 +12,10 @@
             //inserta los datos de asistencias
             $_POST = json_decode(file_get_contents('php://input'),true);
             $con = conectar();
+			
+			//agregado
+			mysqli_set_charset($con,"utf8");
+
             $query ="SELECT * from asistencias WHERE nombre='".$_POST['nombre']."' and apellidos='".$_POST['apellidos']."' and fecha='".$_POST['fecha']."' and hora_entrada='".$_POST['hora_entrada']."' and hora_salida='".$_POST['hora_salida']."'";
  			$res = mysqli_query($con,$query);
             if(mysqli_num_rows($res)==0){

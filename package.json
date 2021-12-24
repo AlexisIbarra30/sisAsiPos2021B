@@ -29,6 +29,7 @@
     "web-vitals": "^1.1.2",
     "xlsx": "^0.16.9"
   },
+  "homepage":"http://148.215.30.245/sisAsiPos/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
