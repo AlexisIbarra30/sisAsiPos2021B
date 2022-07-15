@@ -60,7 +60,6 @@ export default class ProgramsPage extends React.Component{
     //Obtenemos datos iniciales desde BD
     componentDidMount=()=>{
         var url = `${constantes.PATH_API}modifRangos.php`;
-        console.log(url);
         fetch(url,{
             methd:'GET',
             mode:'cors'

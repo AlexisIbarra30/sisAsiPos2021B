@@ -3,6 +3,7 @@ import * as constantes from '../Constantes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
+import { encuentraExpres, expres, validaExpres, validaUsuario } from '../Validadiones';
 export class FormAddUser extends React.Component{
     
     state = {
@@ -11,37 +12,82 @@ export class FormAddUser extends React.Component{
         usuario:"",
         password:"",
         confirm_pass:"",
-        tipo_usuario:null,
         programa:"",
         tipo_programa:[],
         viewPass1:false,
-        viewPass2:false
+        viewPass2:false,
+        nError:"",
+        aError:"",
+        uError:"",
+        pError:""
     }
 
     //Captura de datos 
     onNombreChange = (e) => {
         const nombre = e.target.value;
-        this.setState(() => ({ nombre }))
+        let mensaje="";
+
+        validaExpres(expres.nombres,nombre)?mensaje="":
+        mensaje="Solo incluir letras, los nombres inician con mayuscula y se separan por un unico espacio.";
+
+
+        this.setState(() => ({
+            nombre:nombre,
+            nError:mensaje
+        }));
     }
     onApellidosChange = (e) => {
         const apellidos = e.target.value;
-        this.setState(() => ({ apellidos }))
+        let mensaje="";
+        validaExpres(expres.nombres,apellidos)?mensaje="":
+        mensaje="Solo incluir letras, los apellidos inician con mayuscula y se separan por un unico espacio.";
+        this.setState(() => ({
+            apellidos:apellidos,
+            aError:mensaje
+        }));
     }
 
     onPasswordChange = (e) => {
-        const password = e.target.value;
-        this.setState(() => ({ password }))
+        const password = e.target.value.trim();
+        let mensaje="";
+        let valido = validaExpres(expres.contra,password);
+
+        if(valido && password.length>=8){
+            mensaje="";
+        }else{
+            password.length>0?
+            mensaje="Debe incluir al menos, una minuscula, mayuscula y caracter especial. Longitud minima 8 caracteres.":
+            mensaje=""
+        }
+
+        this.setState(() => ({ 
+            password:password,
+            pError:mensaje 
+        }))
     }
     onConfirmPassChange = (e) => {
-        const confirm_pass = e.target.value;
+        const confirm_pass = e.target.value.trim();
         this.setState(() => ({ confirm_pass }))
     }
 
     onUsuarioChange = (e) => {
-        const usuario = e.target.value;
-        this.setState(() => ({ usuario }))
+        const usuario = e.target.value.trim();
+        let mensaje="";
+        let valido = validaUsuario(usuario);
+        /*mensaje="Incluir al menos una: minuscula, mayuscula, punto o guión. Longitud: 8 caracteres.";*/
+        if(valido && usuario.length==8){
+            mensaje="";
+        }else{
+            usuario.length>0?
+            mensaje="Combinar minusculas, mayusculas, puntos y/o guiones. Longitud: 8 a 15 caracteres.":
+            mensaje=""
+        }
+        this.setState(() => ({ 
+            usuario:usuario,
+            uError:mensaje
+        }))
     }
-    handleTypeUser = (tipo_usuario) => {
+    /*handleTypeUser = (tipo_usuario) => {
         this.setState(() => ({
             tipo_usuario
         }))
@@ -62,7 +108,7 @@ export class FormAddUser extends React.Component{
             document.querySelector("#selectProg").disabled=false;
             this.setState({programa:""});
         }
-    }
+    }*/
     //Funcion para agregar usuarios
     addNewUser = () =>{
         const json = {
@@ -71,12 +117,11 @@ export class FormAddUser extends React.Component{
             usuario:this.state.usuario,
             password:this.state.password,
             confirm_pass:this.state.confirm_pass,
-            tipo_usuario:this.state.tipo_usuario,
             programa:this.state.programa,
             fecha_registro:moment(new Date).format("YYYY/MM/DD")
         }
         
-        if(json.nombre.trim()==="" || json.apellidos.trim()==="" || json.usuario.trim()===""||json.password.trim()===""||json.confirm_pass.trim()===""||json.tipo_usuario===null||json.programa===""){
+        if(json.nombre.trim()==="" || json.apellidos.trim()==="" || json.usuario.trim()===""||json.password.trim()===""||json.confirm_pass.trim()===""||json.programa===""){
             alert("Por favor no dejar campos en blanco");
         }else{
 
@@ -117,6 +162,8 @@ export class FormAddUser extends React.Component{
         }).then(response => response.json())
         .then(data=>{
             this.setState(()=>({tipo_programa:data}));
+            let newData = this.state.tipo_programa.filter(el=>(el.id!=0));
+            this.setState({tipo_programa:newData.sort()});
         });
     }
 
@@ -147,24 +194,40 @@ export class FormAddUser extends React.Component{
         return(
             <div className="formAddUser">
                 <h3>Nuevo Usuario </h3>
-                <div className="form-item morespace">
-                    <label>Nombre(s): </label>
-                    <input type='text' id="nombre" name="nombre" className="text50" onChange={this.onNombreChange} value={this.state.nombre}></input>
+                <div className="morespace withMessage">
+                    <div className='withMessageContent'>
+                        <label>Nombre(s): </label>
+                        <input type='text' id="nombre" name="nombre" className="text50" onChange={this.onNombreChange} value={this.state.nombre}></input>
+                    </div>
+                   
+                    <span className='msgErrorForm'>{this.state.nError}</span>
                 </div>
-                <div className="form-item morespace">
-                    <label>Apellidos: </label>
-                    <input type='text' id="apellidos" name="apellidos" className="text50" onChange={this.onApellidosChange} value={this.state.apellidos}></input>
+                <div className="morespace withMessage">
+                    <div className='withMessageContent'>
+                        <label>Apellidos: </label>
+                        <input type='text' id="apellidos" name="apellidos" className="text50" onChange={this.onApellidosChange} value={this.state.apellidos}></input>
+                    </div>
+                    
+                    <span className='msgErrorForm'>{this.state.aError}</span>
                 </div>
-                <div className="form-item morespace">
-                    <label>Nombre de usuario: </label>
-                    <input type='text' id="usuario" name="usuario" className="text50" onChange={this.onUsuarioChange} value={this.state.usuario}></input>
+                <div className="morespace withMessage">
+                    <div className='withMessageContent'>
+                        <label>Nombre de usuario: </label>
+                        <input type='text' id="usuario" name="usuario" className="text50" onChange={this.onUsuarioChange} value={this.state.usuario}></input>
+                    </div>
+                    
+                    <span className='msgErrorForm'>{this.state.uError}</span>
                 </div>
-                <div className="form-item">
-                    <label>Contraseña: </label>
-                    <input type='password' id="password" name="password" className="campoPass" onChange={this.onPasswordChange} value={this.state.password}></input>
-                    <button className="verPass" onClick={()=>(this.verPassword("password"))}>
-                        {!this.state.viewPass1?<FontAwesomeIcon icon={faEyeSlash}/>:<FontAwesomeIcon icon={faEye} />}
-                    </button>
+                <div className="withMessage">
+                    <div className="withMessageContent">
+                        <label>Contraseña: </label>
+                        <input type='password' id="password" name="password" className="campoPass" onChange={this.onPasswordChange} value={this.state.password}></input>
+                        <button className="verPass" onClick={()=>(this.verPassword("password"))}>
+                            {!this.state.viewPass1?<FontAwesomeIcon icon={faEyeSlash}/>:<FontAwesomeIcon icon={faEye} />}
+                        </button>
+                    </div>
+                    
+                    <span className='msgErrorForm'>{this.state.pError}</span>
                 </div>
                 <div className="form-item">
                     <label>Confirmar contraseña: </label>
@@ -173,20 +236,7 @@ export class FormAddUser extends React.Component{
                         {!this.state.viewPass2?<FontAwesomeIcon icon={faEyeSlash}/>:<FontAwesomeIcon icon={faEye} />}
                     </button>
                 </div>
-                <div className="form-item morespace">
-                    <label>Tipo de usuario: </label>
-                    <div className="radios">
-                        <div className="radio-item">
-                            <input type="radio" value="0" name="tipo-usuario" id="check0" onClick={() => { this.handleTypeUser(0) }} ></input>
-                            <label htmlFor="check0">Coordinador</label>
-                        </div>
-                       
-                        <div className="radio-item">
-                            <input type="radio" value="1" name="tipo-usuario" id="check1" onClick={() => { this.handleTypeUser(1) }}></input>
-                            <label htmlFor="check1">Administardor</label>
-                        </div>
-                    </div>
-                </div>
+
                 <br/>
                 <div className="form-item morespace">
                         <label className="morespace">Programa: </label>

@@ -11,7 +11,10 @@
 			//agregado
 			mysqli_set_charset($con,"utf8");
 
-			$query = "SELECT id,programa_nombre FROM programas";
+			$query = "SELECT id,programa_nombre FROM programas where id < 5 ";
+			if(isset($_GET['id'])){
+				$query = "SELECT id,programa_nombre FROM programas where id=$_GET[id]";
+			}
 			$res = mysqli_query($con,$query);
 			$json = array();
 

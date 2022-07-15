@@ -19,7 +19,7 @@
 			mysqli_set_charset($con,"utf8");
 
             //Recorremos JSON para realizar insersiones/verificar datos repetido
-            foreach($_POST as $reg){
+            foreach($_POST[0] as $reg){
 
                 if(isset($reg['id']) and isset($reg['nombre']) and isset($reg['apellidos']) and isset($reg['fecha']) and isset($reg['hora_entrada'])and isset($reg['hora_salida']) and isset($reg['horas_permanencia'])){
                     $idPrograma = definePrograma($reg['id']);    
@@ -44,6 +44,11 @@
              }
 
             mysqli_close($con);
+
+            //Escribimos la actividad en un log
+            $registro = json_encode($_POST[1]);
+            $bites = file_put_contents("history.log", $registro.PHP_EOL,FILE_APPEND); 
+
             //Construimos respuesta en base a los resultados
             $res = array("nuevos"=>$nuevos,"repetidos"=>$repetidos,"errores"=>$errores);
             echo json_encode($res);

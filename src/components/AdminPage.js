@@ -14,6 +14,11 @@ import UserAccount from './UserAccount';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown} from '@fortawesome/free-solid-svg-icons';
 import * as constantes from './Constantes';
+import { FormAddTeach } from './TeachComponents/FormAddTeach';
+import FormListTeach from './TeachComponents/FormListTeach';
+import FormModifTeach from './TeachComponents/FormModifTeach';
+import GroupMain from './GroupComponents/GroupMain';
+import ReportesPage2 from './UserComponents/ReportesPage2';
 
 
 export default class AdminPage extends React.Component {
@@ -57,13 +62,24 @@ export default class AdminPage extends React.Component {
                             <div className="drop-menu-item-options">
                                 <MenuItem renderHandler={this.renderHandler} Component={FormAddUser} titulo="Agregar Usuario"/>
                                 <MenuItem renderHandler={this.renderHandler} Component={FormListUser} titulo="Listar Usuarios"/>
-                                <MenuItem renderHandler={this.renderHandler} Component={FormModifUser} titulo="Modificar Usuario"/> 
                             </div>
                         </div>
-                        
+
+                        {/*Agregamos drop menu para Profesores*/}
+                        <div className="menu-item drop-menu-item">
+                            <div className="drop-menu-item-info">
+                                <span>Profesores </span>
+                                <FontAwesomeIcon icon={faChevronDown} className="icono"/>
+                            </div>
+                            <div className="drop-menu-item-options">
+                                <MenuItem renderHandler={this.renderHandler} Component={FormAddTeach} titulo="Agregar Profesor"/>
+                                <MenuItem renderHandler={this.renderHandler} Component={FormListTeach} titulo="Listar Profesores"/>
+                            </div>
+                        </div>
+                        <MenuItem renderHandler={this.renderHandler} Component={GroupMain} titulo="Grupos y Alumnos"/>
                         <MenuItem renderHandler={this.renderHandler} Component={FormModifFooter} titulo="Pie de Pagina"/>
                         <MenuItem renderHandler={this.renderHandler} Component={ProgramsPage} titulo="Programas"/>
-                        <MenuItem renderHandler={this.renderHandler} Component={HelpPage} titulo="Ayuda"/>
+                        <MenuItem renderHandler={this.renderHandler} Component={ReportesPage2} titulo="Generar Reportes" />
                     </nav>
                     <div className='panel' id="panel">
                         <this.state.renderComponent/>

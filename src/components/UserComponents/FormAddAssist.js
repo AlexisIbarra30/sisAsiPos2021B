@@ -15,7 +15,7 @@ class FormAddAssist extends React.Component {
 
     state = {
         alumnos: [],
-        date: moment().format("MM/DD/YYYY"),
+        date: moment().format("DD/MM/YYYY"),
         focused: false,
         hora_entrada: "09:00:00",
         hora_salida: "12:00:00",
@@ -33,9 +33,6 @@ class FormAddAssist extends React.Component {
         this.setState(() => ({ focused }))
     }
 
-    componentDidUpdate() {
-        console.log(this.state);
-    }
 
     componentDidMount() {
         let user = JSON.parse(sessionStorage.getItem("USER"));
@@ -74,7 +71,6 @@ class FormAddAssist extends React.Component {
         const url = `${constantes.PATH_API}addAssist.php`;
 
         //Validamos que la fecha no sea mayor a la actual antes de agregar asistencia
-        
         let user = JSON.parse(sessionStorage.getItem("USER"));
         // Empaquetado de los datos
         let datos = {
@@ -124,7 +120,6 @@ class FormAddAssist extends React.Component {
 
     onHourChange = (e) => {
         const horas_permanencia = e.target.value
-        console.log(horas_permanencia);
         this.setState(() => ({horas_permanencia}))
     }
 
@@ -151,11 +146,12 @@ class FormAddAssist extends React.Component {
         
                             <DatePicker
                                 select={this.state.date}
-                                onChange={date => this.setState({date:moment(date).format("YYYY/MM/DD")})}
+                                onChange={(date) => {this.setState({date:moment(date).format("YYYY/MM/DD")})}}
                                 value={moment(this.state.date).format("DD/MM/YYYY")}
                                 locale="es"
                                 maxDate={new Date()}
                                 withPortal
+                                dropdownMode="select"
                             />
 
                         </div>

@@ -29,14 +29,14 @@
 			$_POST = json_decode(file_get_contents('php://input'),true);
 			$json = array();
 
-			if(isset($_POST['nombre']) and isset($_POST['apellidos']) and isset($_POST['usuario']) and isset($_POST['password']) and isset($_POST['tipo_usuario']) ){
+			if(isset($_POST['nombre']) and isset($_POST['apellidos']) and isset($_POST['usuario']) and isset($_POST['password']) ){
 				$con = conectar();
 
 				//agregado
 				mysqli_set_charset($con,"utf8");
 
 				//verificamos que no exista ya el usuario (ver si no se repite el nombre o el usuario)
-				$query = "SELECT * from usuarios where nombre like '".$_POST['nombre']."' and apellidos like '".$_POST['apellidos']."' and usuario = '".$_POST['usuario']."'";
+				$query = "SELECT * from usuarios where nombre like '".$_POST['nombre']."' and apellidos like '".$_POST['apellidos']."' or usuario like '".$_POST['usuario']."'";
 				$res = mysqli_query($con,$query);
 
 				if(mysqli_num_rows($res)==0){
@@ -48,7 +48,7 @@
 						$query = "UPDATE usuarios SET nombre= '".$_POST['nombre']."',apellidos='".$_POST['apellidos']."',usuario = '".$_POST['usuario']."',password='".$_POST['password']."', tipo_usuario = '".$_POST['tipo_usuario']."',programa='".$_POST['programa']."' where id=".$_POST['id'];
 					}else{
 						//si no viene el id, se inserta nuevo registro
-						$query = "INSERT INTO usuarios (nombre,apellidos,usuario,password,tipo_usuario,programa,fecha_registro) VALUES ('".$_POST['nombre']."','".$_POST['apellidos']."','".$_POST['usuario']."','".$_POST['password']."','".$_POST['tipo_usuario']."','".$_POST['programa']."','".$_POST['fecha_registro']."')";
+						$query = "INSERT INTO usuarios (nombre,apellidos,usuario,password,tipo_usuario,programa,fecha_registro) VALUES ('".$_POST['nombre']."','".$_POST['apellidos']."','".$_POST['usuario']."','".$_POST['password']."',0,'".$_POST['programa']."','".$_POST['fecha_registro']."')";
 					}
 
 					mysqli_query($con,$query);
@@ -82,7 +82,7 @@
 				//agregado
 				mysqli_set_charset($con,"utf8");
 
-				$query = "select * from usuarios where usuario='".$_GET['usuario']."' and password ='".$_GET['password']."'";
+				$query = "select * from usuarios where usuario='".$_GET['usuario']."' and password ='".$_GET['password']."' and id_estatus=1";
 				$json = array();
 
 				$res = mysqli_query($con,$query);
@@ -112,7 +112,8 @@
 				//agregado
 				mysqli_set_charset($con,"utf8");
 
-				$query = "DELETE from usuarios where id=".$_GET['id'];
+				//$query = "DELETE from usuarios where id=".$_GET['id']; en lugar de borrar cambia id_estatus a 2
+				$query = "UPDATE usuarios SET id_estatus=2 where id=".$_GET['id'];
 				mysqli_query($con,$query);
 				mysqli_close($con);
 				echo('correcto');
@@ -123,8 +124,8 @@
 
 				//agregado
 				mysqli_set_charset($con,"utf8");
-				
-				$query ="SELECT usuarios.id as id,nombre,apellidos,usuario,programa_nombre,programa,password,tipo_usuario,picture_url from usuarios inner join programas where programas.id = usuarios.programa";
+				//Omitimos los usuarios con ID de programa igual a 5 ya que serán los profesores
+				$query ="SELECT usuarios.id as id,nombre,apellidos,usuario,programa_nombre,programa,password,tipo_usuario,picture_url from usuarios inner join programas where programas.id = usuarios.programa and programas.id !=5 and usuarios.id_estatus=1";
 				$json = array();
 
 				$res = mysqli_query($con,$query);

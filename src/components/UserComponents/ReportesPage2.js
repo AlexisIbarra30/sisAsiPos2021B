@@ -15,7 +15,7 @@ import {subDays} from 'date-fns';
 registerLocale('es', es);
 
 
-class ReportesPage extends React.Component {
+class ReportesPage2 extends React.Component {
     state = {
         alumnos: [],
         startDate:moment(subDays(new Date(),7)).format("YYYY/MM/DD"),
@@ -33,7 +33,7 @@ class ReportesPage extends React.Component {
     }
 
     getRegistros = () => {
-        let options = {weekday: "long", year: "numeric", month: "long", day: "numeric"};
+        
         let user = JSON.parse(sessionStorage.getItem("USER"));
         let programa = user.programa_id;
         let fecha_inicio = this.state.startDate;
@@ -41,11 +41,10 @@ class ReportesPage extends React.Component {
 
         let json = new URLSearchParams({
             fecha_inicio,
-            fecha_fin,
-            programa
+            fecha_fin
         });
         
-        let url = `${constantes.PATH_API}total_horas.php?${json.toString()}`;
+        let url = `${constantes.PATH_API}total_horas2.php?${json.toString()}`;
         console.log(url)
         // Lanzamos el fetch para obtener la lista de alumnos
         fetch(url, {
@@ -72,8 +71,6 @@ class ReportesPage extends React.Component {
     }
 
     generatePDF = () => {
-
-        
         // Creamos nuestro documento pdf
         let image = "./images/logo.png";
         let x = 20;
@@ -120,7 +117,7 @@ class ReportesPage extends React.Component {
         y = 90;
         doc.setFontSize(9);
         this.state.alumnos.forEach((asistencia, index) => {
-        /*  doc.text(`  ${asistencia.nombre}    ${asistencia.apellidos}    ${this.state.fchI}     ${this.state.fchF}      ${asistencia.total_horas}`, 5, y);
+          /*  doc.text(`  ${asistencia.nombre}    ${asistencia.apellidos}    ${this.state.fchI}     ${this.state.fchF}      ${asistencia.total_horas}`, 5, y);
             y = y +10;
             if(index > 18) {
                 return false;
@@ -144,26 +141,8 @@ class ReportesPage extends React.Component {
             
             
         });
-        
+
         doc.save("Asistencias.pdf");
-
-        //Escribimos la actividad en un log
-        let options = {weekday: "long", year: "numeric", month: "long", day: "numeric"}
-        let user = JSON.parse(sessionStorage.getItem("USER"));
-        let registro = {
-            "usuario":user.nombre+" "+user.apellidos,
-            "programa":user.programa,
-            "accion":"Genera reporte",
-            "fecha":new Date().toLocaleDateString("es-ES", options)+" - "+new Date().toLocaleTimeString(),
-            "extras":[`${this.state.startDate} - ${this.state.endDate} `]
-        }
-
-        const url = `${constantes.PATH_API}registraLog.php`;
-        fetch(url,{
-            method:'POST',
-            body: JSON.stringify(registro)
-        }).then(resp =>resp.text());
-        
     }
     
 
@@ -277,4 +256,4 @@ class ReportesPage extends React.Component {
         );
     }
 }
-export default ReportesPage;
+export default ReportesPage2;

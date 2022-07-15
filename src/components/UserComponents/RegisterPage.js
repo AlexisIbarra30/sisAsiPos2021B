@@ -5,6 +5,7 @@ import SingleFile from '../SingleFile';
 import ListItem from './ListItems';
 import * as constantes from '../Constantes';
 
+
 export default class RegisterPage extends React.Component {
 
     state = {
@@ -152,7 +153,6 @@ export default class RegisterPage extends React.Component {
 
         // Creamos un array con las asistencias y horas asistidas de cada alumno
         const asistencias = this.getAssist(students)
-        console.log(asistencias)
 
         // Salvamos las asistencias en el estado de la app
         this.setState(() => ({
@@ -219,13 +219,25 @@ export default class RegisterPage extends React.Component {
             document.body.style.cursor = 'default'; //cursos default
         }
     }
+    
+
+
     //Guarda los registros en la BD
     guardaBD = () => {
 
         this.loader(true); //Mostramos cursor loader
         const url = `${constantes.PATH_API}asistencias.php`;
+        let options = {weekday: "long", year: "numeric", month: "long", day: "numeric"}
         var json = [];
-        console.log(this.state.alumnos);
+
+        var user = JSON.parse(sessionStorage.getItem("USER"));
+        var json2 = {
+            "usuario":user.nombre+" "+user.apellidos,
+            "programa":user.programa,
+            "accion":"Carga de archivos",
+            "fecha":new Date().toLocaleDateString("es-ES", options)+" - "+new Date().toLocaleTimeString(),
+            "extras":this.state.archivos
+        }
         //Generamos json con todos los registros            
         this.state.alumnos.map((asistencia, index) => {
             let datos = {
@@ -239,11 +251,11 @@ export default class RegisterPage extends React.Component {
             }
             json.push(datos);
         });
-
+        var enviar = [json,json2]
         //Enviamos json al servidor
         fetch(url, {
             method: 'POST',
-            body: JSON.stringify(json)
+            body: JSON.stringify(enviar)
         })
             .then(res => res.json())
             .then(
@@ -255,15 +267,13 @@ export default class RegisterPage extends React.Component {
                         mensaje = `Terminado: Se agregaron ${data['nuevos']} asistencias, con : ${data['repetidos']} registros repetidos`;
                     }
                     this.loader(false); //Quitamos cursor loader
-                    
                     alert(mensaje);
+                    
                 }
             );
     }
 
-    clickFile=()=>{
-        console.log("holaa");
-    }
+
 
 
     render() {

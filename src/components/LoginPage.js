@@ -3,6 +3,7 @@ import { history } from '../routers/AppRouter';
 import * as constantes from './Constantes';
 import ReCAPTCHA from 'react-google-recaptcha';
 import CentralLoader from './CentralLoader';
+import {expres,validaExpres,encuentraExpres} from './Validadiones';
 
 const recaptchaRef = React.createRef();
 
@@ -11,9 +12,11 @@ export default class LoginPage extends React.Component {
     state = {
         error: undefined,
         user: "",
+        uError:"",
         password: "",
+        pError:"",
         userRole: undefined,
-        captcha:undefined,
+        captcha:undefined, 
         ready:true
     }
 
@@ -25,12 +28,22 @@ export default class LoginPage extends React.Component {
 
     onUserChange = (e) => {
         const user = e.target.value.trim();
-        this.setState(() => ({ user }))
+        let mensaje="";
+        encuentraExpres(expres.caracteresEspeciales,user)?mensaje="":mensaje="";
+        this.setState(() => ({ 
+            user:user,
+            uError:mensaje
+        }))
     }
 
     onPasswordChange = (e) => {
         const password = e.target.value.trim();
-        this.setState(() => ({ password }))
+        let mensaje="";
+        validaExpres(expres.contra,password)?mensaje="":mensaje=""; //Corregir mensaje de error
+        this.setState(() => ({ 
+            password:password,
+            pError:mensaje
+        }))
     }
 
     onChange = (e) => {
@@ -46,53 +59,85 @@ export default class LoginPage extends React.Component {
         //this.setState({ready:false});
         // Verificamos que haya completado el formulario
         if (this.state.user && this.state.password && this.state.captcha) {
-            // Envolvemos los datos en un JSON
-            this.setState({ready:false});
-            const json = {
-                usuario: this.state.user,
-                password: this.state.password,
-            };
 
-            const url = `${constantes.PATH_API}login.php`;
-            // Lanzamos los datos al servidor
-            fetch(url, {
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify(json)
-            })
-                .then(res => res.json())
-                .catch(error => {
-                    console.log('Error', error);
+            //Validamos que los campos cumplen con las validaciones
+            if(this.state.uError.length == 0 && this.state.pError.length == 0){
+                // Envolvemos los datos en un JSON
+                this.setState({ready:false});
+                const json = {
+                    usuario: this.state.user,
+                    password: this.state.password,
+                };
+
+                const url = `${constantes.PATH_API}login.php`;
+                // Lanzamos los datos al servidor
+                fetch(url, {
+                    method: 'POST',
+                    mode: 'cors',
+                    body: JSON.stringify(json)
                 })
-                .then(response => {
-                    const user = response[0];
-                    //Usuario comun
-                    if (user.valido === true && user.tipo_usuario === "0") {
-                        //Guardamos en el localStorage el usuario
-                        sessionStorage.setItem("USER", JSON.stringify({ "id": user.id, "nombre": user.nombre, "apellidos": user.apellidos, "programa": user.programa_nombre, "programa_id": user.programa_id,"fecha_registro":user.fecha_registro,"picture_url":user.picture_url}));
-                        history.push('/user');
-                    } else {
-                        // Administrador
-                        if (user.valido === true && user.tipo_usuario === "1") {
+                    .then(res => res.json())
+                    .catch(error => {
+                        console.log('Error', error);
+                    })
+                    .then(response => {
+                        const user = response[0];
+                        //Usuario comun
+                        if (user.valido === true && user.tipo_usuario === "0") {
                             //Guardamos en el localStorage el usuario
                             sessionStorage.setItem("USER", JSON.stringify({ "id": user.id, "nombre": user.nombre, "apellidos": user.apellidos, "programa": user.programa_nombre, "programa_id": user.programa_id,"fecha_registro":user.fecha_registro,"picture_url":user.picture_url}));
-                            history.push('/admin');
+                            history.push('/user');
                         } else {
-                            // Limpiamos captcha
-                            //recaptchaRef.current.reset();
-                            this.setState(() => ({
-                                //captcha: false,
-                                error: "Usuario y/o contraseña incorrecto",
-                                ready:true
-                            }));
-                            setTimeout(() => {
-                                this.setState(() => ({
-                                    error: undefined
-                                }));
-                            }, 3000)
+                            // Administrador
+                            if (user.valido === true && user.tipo_usuario === "1") {
+                                //Guardamos en el localStorage el usuario
+                                sessionStorage.setItem("USER", JSON.stringify({ "id": user.id, "nombre": user.nombre, "apellidos": user.apellidos, "programa": user.programa_nombre, "programa_id": user.programa_id,"fecha_registro":user.fecha_registro,"picture_url":user.picture_url}));
+                                history.push('/admin');
+                            } else{
+                                if(user.valido === true && user.tipo_usuario==="2"){
+                                    sessionStorage.setItem("USER", JSON.stringify({ "id": user.id, "nombre": user.nombre, "apellidos": user.apellidos, "programa": user.programa_nombre, "programa_id": user.programa_id,"fecha_registro":user.fecha_registro,"picture_url":user.picture_url}));
+                                    history.push('/teach');
+                                }else {
+                                    if(user.valido ===true && user.tipo_usuario==="Alumno"){
+                                        sessionStorage.setItem("USER", JSON.stringify({ "id": user.id, "nombre": user.nombre, "apellidos": user.apellidos, "programa": user.programa_nombre, "programa_id": user.programa_id,"picture_url":user.picture_url}));
+                                        history.push('/alum');
+                                    }else{
+                                        // Limpiamos captcha
+                                        //recaptchaRef.current.reset();
+                                        this.setState(() => ({
+                                            //captcha: false,
+                                            error: "Usuario y/o contraseña incorrecto",
+                                            ready:true
+                                        }));
+                                        setTimeout(() => {
+                                            this.setState(() => ({
+                                                error: undefined
+                                            }));
+                                        }, 3000)
+                                    }
+                                    
+                                
+                                
+                                }
+                            }
                         }
-                    }
-                });
+                    });
+            }else{
+                // Limpiamos el captcha 
+                recaptchaRef.current.reset();
+                // Si no se completo mostramos el error
+                this.setState(() => ({
+                    error: "Verifique los datos ingresados en los campos",
+                    ready:true
+                }));
+                setTimeout(() => {
+                    this.setState(() => ({
+                        captcha: false,
+                        error: undefined
+                    }));
+                }, 3000)
+            }
+
         } else {
             // Limpiamos el captcha 
             recaptchaRef.current.reset();
@@ -135,10 +180,12 @@ export default class LoginPage extends React.Component {
                                     <div className='optionContainer'>
                                         <p className='loginText'> Usuario</p>
                                         <input onChange={this.onUserChange} value={this.state.user} className='loginInput' type='text' />
+                                        <span className='msgErrorForm'>{this.state.uError}</span>
                                     </div>
                                     <div className='optionContainer'>
                                         <p className='loginText'> Contraseña </p>
                                         <input onChange={this.onPasswordChange} value={this.state.password} className='loginInput' type='password' />
+                                        <span className='msgErrorForm'>{this.state.pError}</span>
                                     </div>
                                     <div className='separador'></div>
                                     <div className='recaptcha'>
@@ -146,7 +193,6 @@ export default class LoginPage extends React.Component {
                                             ref={recaptchaRef}
                                             sitekey="6Ld-5V4cAAAAALyV-dtix6bash2w0rJn6ykgBRDh"
                                             onChange={this.onChange}
-                                            theme='ligth'
                                             size='normal'
                                         />
                                         </div>

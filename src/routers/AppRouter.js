@@ -6,6 +6,8 @@ import AdminPage from '../components/AdminPage';
 import UserPage from '../components/UserPage';
 import Error004 from '../components/Error404';
 import * as constantes from '../components/Constantes';
+import TeachPage from '../components/TeachPage';
+import AlumPage from '../components/AlumPage';
 
 export const history = createHashHistory();
 const AppRouter = () => (
@@ -14,7 +16,9 @@ const AppRouter = () => (
             <Route exact path='/' component={LoginPage} />
             <Route path='/admin' component={AdminPage} />
             <Route path='/user' component={UserPage} />
-            <Route path='*' component={Error004} />
+            <Route path='/teach' component={TeachPage} />
+            <Route path='/alum' component={AlumPage}/>
+            <Route path='/*' component={Error004} />
         </Switch>
     </HashRouter>
     

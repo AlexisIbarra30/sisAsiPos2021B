@@ -1,22 +1,17 @@
 <?php
     function conectar(){
 		//datos de conexion servidor uaemex
-		$servidor="localhost";
+		/*$servidor="localhost";
 		$user = "uSisAsiPos";
 		$pass = "pS!s@s!Pos";
-		$nombreBD = "dbsisasipos";
+		$nombreBD = "dbsisasipos";*/
 		
-		//Servidor local
-		/*$servidor = "localhost";
+		//Servidor local (de desarrollo)
+		$servidor = "localhost";
 		$user="root";
 		$pass = "";
-		$nombreBD = "bdasistencias";*/
+		$nombreBD = "dbsisasipos";
 
-		//Conexion hosting gratuito
-		/*$servidor="localhost";
-		$user = "mysisasipo";
-		$pass = "hVJTqVdQ";
-		$nombreBD = "bdasistencias";*/
 
 
 		//Conectar a la bd

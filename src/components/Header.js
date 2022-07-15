@@ -21,11 +21,16 @@ export default class Header extends React.Component{
     getUserName = () => {
         
         let user = JSON.parse(sessionStorage.getItem("USER"));
-        this.setState(() => ({name: user.nombre}))
+        /*this.setState(() => ({name: user.nombre}))
         this.setState(() => ({app: user.apellidos}))
         this.setState(() => ({programa: user.programa}))
-        this.setState(()=>({picture_url:user.picture_url}));
-        console.log(user.nombre);
+        this.setState(()=>({picture_url:user.picture_url}));*/
+        this.setState(()=>({
+            name:user.nombre,
+            app:user.apellidos,
+            programa: user.programa,
+            picture_url:user.picture_url
+        }));
     };
 
     handleClose = () => {
@@ -63,7 +68,7 @@ export default class Header extends React.Component{
                             <img src='images/logo.png' alt="UAEMex Logo"/>
                         </a>
                         <h3>Sistema de Registro de Asistencias</h3>
-                        <a href="http://fingenieria.uaemex.mx/portal/inicio/home.php" target="_blank" rel="noreferrer">
+                        <a href="https://fi.uaemex.mx/portal/inicio/home.php" target="_blank" rel="noreferrer">
                             <img src='images/fingenieria-min.png' alt="Facultad Ingenieria UAEMex"/>
                         </a>
                     </div>
@@ -75,7 +80,7 @@ export default class Header extends React.Component{
             <div className="logout-container">
 
                 <div className="userType">
-                    <h3 className="title">{`Panel de ${this.state.programa=="Administrador"?this.state.programa:"Coordinador"}`}</h3>
+                    <h3 className="title">{`Panel de ${this.state.programa}`}</h3>
                 </div>
 
                 <div className="userMenu">
@@ -106,7 +111,6 @@ export default class Header extends React.Component{
                             </div>
                         </div>
 
-                        
                     </div>
                 </div>
 

@@ -94,6 +94,20 @@
     box-shadow: 2px 2px 5px darken(#2EA44F, .7);
     outline: none;
 }
+.formAddUser .withMessage{
+    display: flex;
+    flex-direction: column;
+}
+.formAddUser .withMessage .withMessageContent{
+    display: flex;
+    justify-content: space-between;
+}
+.formAddUser .withMessage .msgErrorForm{
+    font-size: 1.2rem;
+    margin:0.5rem 0;
+    color: #DC3545;
+    font-weight: bold;
+}
 
 .more-width{
     width:100%;

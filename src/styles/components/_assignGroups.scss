@@ -1,0 +1,35 @@
+.inscritos{
+    margin:1rem 0;
+    max-height: 40vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    overflow-y: scroll;
+    border:1px dotted #999;
+}
+
+.inscritoItem{
+    width:90%;
+    display: flex;
+    justify-content: space-between;
+    padding:1rem;
+    border-bottom:2px solid #999;
+  
+}
+
+.inscritoItem .info{
+    display:flex;
+    flex-flow:column;
+}
+.inscritoItem .botones button{
+    color:#fff;
+    background-color: red;
+    margin:0;
+    padding:0.2rem;
+    outline: none;
+    border:1px solid transparent;
+}
+
+.inscritoItem .botones button:hover{
+    background-color:rgb(204, 31, 31);
+}

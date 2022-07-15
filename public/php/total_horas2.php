@@ -23,7 +23,7 @@
                 $query="SELECT nombre,apellidos,SEC_TO_TIME(SUM(TIME_TO_SEC(horas_permanencia))) as total_horas from asistencias where fecha BETWEEN '".$_GET['fecha_inicio']."' and '".$_GET['fecha_fin']."' and nombre like'".$_GET['nombre']."' and apellidos like '".$_GET['apellidos']."'";
             }else{
                 //Si no dan un nombre en concreto, consulta todos los alumnos                
-                $query="SELECT nombre,apellidos,SEC_TO_TIME(SUM(TIME_TO_SEC(horas_permanencia))) as total_horas from asistencias where fecha BETWEEN '".$_GET['fecha_inicio']."' and '".$_GET['fecha_fin']."' and programa='".$_GET['programa']."' group by nombre,apellidos";
+                $query="SELECT nombre,apellidos,SEC_TO_TIME(SUM(TIME_TO_SEC(horas_permanencia))) as total_horas from asistencias where fecha BETWEEN '".$_GET['fecha_inicio']."' and '".$_GET['fecha_fin']."' group by nombre,apellidos";
             }
 
             //Conectamos y Ejecutamos la consulta
@@ -42,14 +42,9 @@
                 while($fila=mysqli_fetch_assoc($res))
                     $json[] = $fila;
                 
-                
                 echo json_encode($json);
             }   
             mysqli_close($con);
-
-           
-            
-
         break;
 
     }

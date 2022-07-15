@@ -1,0 +1,128 @@
+.form-container-mini{
+    width:90%;
+    padding:1rem;
+}
+
+
+.seccion-horizontal{
+    display: flex;
+    width:100%;
+    margin:0;
+    padding: 0;
+}
+.seccion-menu{
+    display: flex;
+    flex-direction: column;
+    width:20%;
+}
+.seccion-menu-botones{
+    background-image: linear-gradient(315deg, #63d471 0%, #0a7533 40%);
+    display: flex;
+    flex-direction: column;
+}
+.seccion-menu-botones > *{
+    border-top:0.5rem solid #fff;
+}
+
+.seccion-main{
+    width:80%;
+    padding:1.5rem;
+    border:1px dotted #999;
+}
+
+//formulario agregar grupo
+.FormAddGroup{
+    display: flex;
+    width:80%;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: 60vh;
+    margin-left: 10%;
+}
+.FormAddGroup .text50{
+    width:50%;
+    outline: none;
+    padding:0.3em;
+    border: .1rem solid rgb(34, 100, 112);
+}
+
+.FormAddGroup .text50:hover,.formAddUser .text50:focus, .campoPass:hover, .campoPass:focus{
+    border: 0.1rem solid #2EA44F;
+    box-shadow: 2px 2px 5px darken(#2EA44F, .7);
+    outline: none;
+}
+.FormAddGroup .form-item-calendar {
+    display: flex;
+    justify-content: space-between;
+    margin:1rem 0;
+}
+
+.FormAddGroup .form-item-calendar .react-datepicker__input-container input{
+    box-sizing: border-box;
+    padding:0.3rem;
+}
+.FormAddGroup .form-item-calendar>label{
+    width: auto;
+}
+.descipcion-grupos{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width:50%;
+}
+.descipcion-grupos #descripcion{
+    width:95%;
+    resize: none;
+}
+.descipcion-grupos span{
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.FormAddGroup .mensaje-form{
+    margin:0 0 2rem 0;
+    width: 100%;
+}
+.FormAddGroup .selecAlumnos{
+    width:80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+.FormAddGroup .botones button{
+    width: auto;
+    padding:0 1.5rem;
+}
+//Tabla listar grupos
+.registerHEaderMini{
+    width:98%;
+}
+.buttonBorrarMini{
+    flex-direction: column;
+    align-items:center;
+}
+.buttonBorrarMini button{
+    font-size: 1rem;
+    width:50%;
+    margin:0.5rem 0;
+}
+//Para ventana Teach
+.panelTeach{
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.centerbutton{
+    display: flex;
+    justify-content: center;
+}
+.horarios{
+    border:1px dotted #999;
+    min-height: 5rem;
+}
+
+//Borde redondeado de inputs
+.FormAddGroup input, .FormAddGroup textarea{
+    border-radius: 0.7rem;
+}

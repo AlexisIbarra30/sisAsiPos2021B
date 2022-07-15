@@ -16,7 +16,8 @@
 			//agregado
 			mysqli_set_charset($con,"utf8");
 
-			$query ="SELECT programa_nombre,lim_inferior,lim_superior from programas where id !=0";
+			//Para evitar que seleccione al Administrador y a los Profesores
+			$query ="SELECT programa_nombre,lim_inferior,lim_superior from programas where id !=0 and id !=5";
 			$json = array();
 			$res = mysqli_query($con,$query);
 
