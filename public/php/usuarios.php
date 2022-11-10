@@ -118,6 +118,30 @@
 				mysqli_close($con);
 				echo('correcto');
 			}
+			else if(isset($_GET['login'])){
+				//Validar primer login y ultima fecha de cambio
+				$con = conectar();
+				mysqli_set_charset($con,"utf8");
+				$id = $_GET['login'];
+				$query = "SELECT first_login,lastpass_modif as lastpass from usuarios where  id=$id";
+				$json = array();
+				//Generamos la consulta
+				$res = mysqli_query($con,$query);
+				
+
+				//Generamos respuesta
+				if(mysqli_num_rows($res)==0){
+					//No existe el usuario
+					$json = '';
+				}else{
+					//Existe el usuario, devuelve primer login y fecha ultima modificación
+					while($fila=mysqli_fetch_assoc($res)){
+						$json = $fila;
+					}
+				}
+				mysqli_close($con);
+				echo json_encode($json);
+			}
 			else{
 				//Si no viene ninguna variable, devolver todos los usuarios
 				$con = conectar();
