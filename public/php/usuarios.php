@@ -1,6 +1,7 @@
 <?php 
 	header('Access-Control-Allow-Origin:*');
 	include_once 'conexion.php';
+	include_once 'cif_aes.php';
 
 	/*
 		Para VALIDAR un usuario: (usuario, password,tipo_usuario)
@@ -35,8 +36,13 @@
 				//agregado
 				mysqli_set_charset($con,"utf8");
 
+				//Usuario y password cifrados con AES
+				$usuario_cif = cifrar($_POST['usuario']);
+				$password_cif = cifrar($_POST['password']);
+
 				//verificamos que no exista ya el usuario (ver si no se repite el nombre o el usuario)
-				$query = "SELECT * from usuarios where nombre like '".$_POST['nombre']."' and apellidos like '".$_POST['apellidos']."' or usuario like '".$_POST['usuario']."'";
+				//$query = "SELECT * from usuarios where nombre like '".$_POST['nombre']."' and apellidos like '".$_POST['apellidos']."' or usuario like '".$_POST['usuario']."'";
+				$query = "SELECT * from usuarios where nombre like '".$_POST['nombre']."' and apellidos like '".$_POST['apellidos']."' or usuario like '".$usuario_cif."'";
 				$res = mysqli_query($con,$query);
 
 				if(mysqli_num_rows($res)==0){
@@ -45,10 +51,12 @@
 
 					if(isset($_POST['id'])){
 						//Si viene el id, significa que se actualiza el registro
-						$query = "UPDATE usuarios SET nombre= '".$_POST['nombre']."',apellidos='".$_POST['apellidos']."',usuario = '".$_POST['usuario']."',password='".$_POST['password']."', tipo_usuario = '".$_POST['tipo_usuario']."',programa='".$_POST['programa']."' where id=".$_POST['id'];
+						//$query = "UPDATE usuarios SET nombre= '".$_POST['nombre']."',apellidos='".$_POST['apellidos']."',usuario = '".$_POST['usuario']."',password='".$_POST['password']."', tipo_usuario = '".$_POST['tipo_usuario']."',programa='".$_POST['programa']."' where id=".$_POST['id'];
+						$query = "UPDATE usuarios SET nombre= '".$_POST['nombre']."',apellidos='".$_POST['apellidos']."',usuario = '".$usuario_cif."',password='".$password_cif."', tipo_usuario = '".$_POST['tipo_usuario']."',programa='".$_POST['programa']."' where id=".$_POST['id'];
 					}else{
 						//si no viene el id, se inserta nuevo registro
-						$query = "INSERT INTO usuarios (nombre,apellidos,usuario,password,tipo_usuario,programa,fecha_registro) VALUES ('".$_POST['nombre']."','".$_POST['apellidos']."','".$_POST['usuario']."','".$_POST['password']."',0,'".$_POST['programa']."','".$_POST['fecha_registro']."')";
+						//$query = "INSERT INTO usuarios (nombre,apellidos,usuario,password,tipo_usuario,programa,fecha_registro) VALUES ('".$_POST['nombre']."','".$_POST['apellidos']."','".$_POST['usuario']."','".$_POST['password']."',0,'".$_POST['programa']."','".$_POST['fecha_registro']."')";
+						$query = "INSERT INTO usuarios (nombre,apellidos,usuario,password,tipo_usuario,programa,fecha_registro) VALUES ('".$_POST['nombre']."','".$_POST['apellidos']."','".$usuario_cif."','".$password_cif."',0,'".$_POST['programa']."','".$_POST['fecha_registro']."')";
 					}
 
 					mysqli_query($con,$query);
@@ -56,7 +64,8 @@
 				}else{
 					if(isset($_POST['id'])){
 						//Si viene el id, significa que se actualiza el registro
-						$query = "UPDATE usuarios SET nombre= '".$_POST['nombre']."',apellidos='".$_POST['apellidos']."',usuario = '".$_POST['usuario']."',password='".$_POST['password']."', tipo_usuario = '".$_POST['tipo_usuario']."', programa='".$_POST['programa']."' where id=".$_POST['id'];
+						//$query = "UPDATE usuarios SET nombre= '".$_POST['nombre']."',apellidos='".$_POST['apellidos']."',usuario = '".$_POST['usuario']."',password='".$_POST['password']."', tipo_usuario = '".$_POST['tipo_usuario']."', programa='".$_POST['programa']."' where id=".$_POST['id'];
+						$query = "UPDATE usuarios SET nombre= '".$_POST['nombre']."',apellidos='".$_POST['apellidos']."',usuario = '".$usuario_cif."',password='".$password_cif."', tipo_usuario = '".$_POST['tipo_usuario']."', programa='".$_POST['programa']."' where id=".$_POST['id'];
 						mysqli_query($con,$query);
 						echo ("correcto");	
 					}else{
@@ -82,7 +91,12 @@
 				//agregado
 				mysqli_set_charset($con,"utf8");
 
-				$query = "select * from usuarios where usuario='".$_GET['usuario']."' and password ='".$_GET['password']."' and id_estatus=1";
+				//Usuario y password cifrados con AES
+				$usuario_cif = cifrar($_GET['usuario']);
+				$password_cif = cifrar($_GET['password']);
+
+				//$query = "select * from usuarios where usuario='".$_GET['usuario']."' and password ='".$_GET['password']."' and id_estatus=1";
+				$query = "select * from usuarios where usuario='".$usuario_cif."' and password ='".$password_cif."' and id_estatus=1";
 				$json = array();
 
 				$res = mysqli_query($con,$query);
@@ -155,7 +169,10 @@
 				$res = mysqli_query($con,$query);
 
 				while($fila=mysqli_fetch_assoc($res))
+					//$men= decifrar($fila['usuario']);
+					//echo ($men);
                 	$json[] = $fila;
+					//FALTA DESCIFRAR EL NOMBRE DE USUARIO
                 
                 mysqli_close($con);
                 echo json_encode($json);

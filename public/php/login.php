@@ -1,7 +1,19 @@
-<?php 
+<?php
+
 	header('Access-Control-Allow-Origin:*');
-	
 	include_once 'conexion.php';
+	include_once 'cif_aes.php';
+	include_once 'sesion.php';
+
+	
+	/*
+	Setear el id de la sesion no es correcto, sin embargo arregla el problema que se tenia con el servidor de prueba, el cual
+	seteaba un nuevo id para la sesion y por lo tanto no se podian obtener los datos guardados en la sesion. Seria cuestion de ver
+	si en un servidor de produccion se arregla el problema. Por lo mientras, funciona.
+	*/
+	session_id("hao4iijmbv7cl4nouna3hmldjs");	
+	session_start();
+
 
 	switch($_SERVER['REQUEST_METHOD']){
 	 	//Verificar que el usuario existe y devolver sus datos
@@ -9,22 +21,42 @@
 
 	 		$_POST = json_decode(file_get_contents('php://input'),true);
 	 		if(isset($_POST['usuario']) and isset($_POST['password'])){
+
+
+				
+				//Verifica que no se tengan tres intentos o que ya haya pasado 1 min despues de los 3 intentos
+				// Falta modificar el mensaje de error del lado del frontend, mientras manda el mismo mensaje de error al iniciar sesion			
+				if (!verificar_intentos_hora()){
+					$json[] = array("valido"=>false);
+					echo json_encode($json);
+					break;
+				}
+				
+				
 				//Validar usuario para login: devolver {valido:true/false}
 				$con = conectar();
 
 				//agregado
 				mysqli_set_charset($con,"utf8");
 
-				$query = "SELECT usuarios.id as id,programas.id as programa_id,nombre,apellidos,usuario,programa_nombre,tipo_usuario,fecha_registro,picture_url from usuarios inner join programas where programas.id = usuarios.programa and usuario='".$_POST['usuario']."' and password ='".$_POST['password']."'";
+				//Usuario y password cifrados con AES
+				$usuario_cif = cifrar($_POST['usuario']);
+				$password_cif = cifrar($_POST['password']);
+
+
+				//$query = "SELECT usuarios.id as id,programas.id as programa_id,nombre,apellidos,usuario,programa_nombre,tipo_usuario,fecha_registro,picture_url from usuarios inner join programas where programas.id = usuarios.programa and usuario='".$_POST['usuario']."' and password ='".$_POST['password']."'";
+				$query = "SELECT usuarios.id as id,programas.id as programa_id,nombre,apellidos,usuario,programa_nombre,tipo_usuario,fecha_registro,picture_url from usuarios inner join programas where programas.id = usuarios.programa and usuario='".$usuario_cif."' and password ='".$password_cif."'";
 				$json = array();
 
 				$res = mysqli_query($con,$query);
 
 				if(mysqli_num_rows($res)==0){
 					//No existe el usuario en tabla de usuarios, se busca ahora en tabla de alumnos
-					$query = "SELECT * from alumnos where usuario='".$_POST['usuario']."' and password ='".$_POST['password']."'";
+					//$query = "SELECT * from alumnos where usuario='".$_POST['usuario']."' and password ='".$_POST['password']."'";
+					$query = "SELECT * from alumnos where usuario='".$usuario_cif."' and password ='".$password_cif."'";
 					$res = mysqli_query($con,$query);
 					if(mysqli_num_rows($res)==0){
+						aumenta_contador();				//Aumenta el contador de numero de intentos
 						$json[] = array("valido"=>false);
 					}
 					else{
@@ -61,8 +93,5 @@
 
 			}
 	 		break;
-
 	 }
-
-
 ?>
