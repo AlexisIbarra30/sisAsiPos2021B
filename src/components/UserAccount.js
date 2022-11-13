@@ -2,6 +2,8 @@ import React from 'react';
 import * as constantes from './Constantes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash,faCamera,faCheckCircle,faTimesCircle} from '@fortawesome/free-solid-svg-icons';
+import moment from 'moment';
+
 
 export default class UserAccount extends React.Component{
     state={
@@ -68,6 +70,7 @@ export default class UserAccount extends React.Component{
             n_pass:this.state.pass2,
             id:this.state.id,
             op:"1",
+            currentDate:new moment().format("YYYY-MM-DD")
         } 
         //Verificamos que no sean campos vacios
         if(json.a_pass.trim()!=="" && json.n_pass.trim()!==""){

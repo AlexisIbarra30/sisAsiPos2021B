@@ -14,6 +14,8 @@ export default class Header extends React.Component{
         picture_url:undefined
     }
 
+    
+
     componentDidMount() {
         this.getUserName();
         this.setState({picture_url:JSON.parse(sessionStorage.getItem("USER")).picture_url});
@@ -82,7 +84,7 @@ export default class Header extends React.Component{
                 <div className="userType">
                     <h3 className="title">{`Panel de ${this.state.programa}`}</h3>
                 </div>
-
+                {this.props.showMenu==1 &&
                 <div className="userMenu">
                     <div>
                         <div className="drop-options">
@@ -112,7 +114,7 @@ export default class Header extends React.Component{
                         </div>
 
                     </div>
-                </div>
+                </div>}
 
 
             </div>
@@ -121,3 +123,7 @@ export default class Header extends React.Component{
         );
     }
 } 
+
+Header.defaultProps={
+    showMenu:1
+}

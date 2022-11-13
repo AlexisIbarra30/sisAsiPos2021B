@@ -1,0 +1,29 @@
+.vertical-fl{
+    display:flex;
+    flex-direction: column;
+}
+.cambiarPass{
+    width:80%;
+    align-self: center;
+    border:0.1em dotted #999;
+    padding:0.5em 1em;
+}
+
+.cambiarPass .formChangePass-buttons{
+   justify-content: space-around;
+}
+.cambiarPass .formChangePass .item {
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.cambiarPass .formChangePass .item .msgErrorForm{
+    font-size: 1.2rem;
+    margin:0.5rem 0;
+    color: #DC3545;
+    font-weight: bold;
+}
+.container{
+    min-height: 50vh;
+}
+

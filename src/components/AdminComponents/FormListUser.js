@@ -53,7 +53,7 @@ export class FormListUser extends React.Component{
                         <div className='registerHEader textBold'>
                             <h3> Usuario</h3>
                             <h3> Nombre completo</h3>
-                            <h3> Nombre de Usuario </h3>
+                            <h3> Fecha de creación </h3>
                             <h3> Programa</h3>
                             <h3> Opciones</h3>
                         </div>
@@ -68,7 +68,7 @@ export class FormListUser extends React.Component{
                                                             <img src={user.picture_url}></img>
                                                         </div>
                                                         <h3> {user.nombre} {user.apellidos}</h3>
-                                                        <h3> {user.usuario} </h3>
+                                                        <h3> {user.fecha_registro} </h3>
                                                         <h3> {user.programa_nombre} </h3>
                                                         <div className="buttonBorrar">
                                                             {this.state.currentUser.nombre!=user.nombre&&this.state.currentUser!=user.apellidos?<button  onClick={(e)=>this.eliminarUser(e,user.id)}>Borrar</button>:<span>Sesión actual</span>}

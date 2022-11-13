@@ -149,7 +149,6 @@ export default class ProgramsPage extends React.Component{
         }).then(res=>res.text())
         .then(datos=>{
             //Verificamos que sea correcta y mandamos alerta
-            console.log(datos);
             alert("Rangos modificados correctamente. Actualice la pagina para mostrar cambios.");
         });
     }
