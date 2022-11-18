@@ -61,6 +61,8 @@ export default class DosFactores extends React.Component {
 
     }
 
+    
+
 
     sendCode = () => {
 
