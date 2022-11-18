@@ -1,6 +1,8 @@
 <?php
 
-
+/*
+Verifica que el numero de intentos sea menor a 3 o que el tiempo que ya haya pasado un minuto para volver a intentar
+*/
 function verificar_intentos_hora(){
     if(isset($_SESSION['contador'])) {
         $contador = $_SESSION['contador'];
@@ -19,6 +21,26 @@ function verificar_intentos_hora(){
         }
     }
     return true;
+}
+
+/*
+Obtiene el numero de segundos que faltan para que el usuario pueda volver a intentar el inicio de sesion
+*/
+function get_tiempo_sobrante(){
+    $cur_time = strtotime("now");
+    $end_time = $_SESSION['hora'];
+    $sob_time = $end_time - $cur_time;
+    return $sob_time;
+}
+
+
+/*
+Obtiene el numero de intentos restantes
+*/
+function get_intentos_restantes(){
+    $cont = $_SESSION['contador'];
+    $restantes = 3 - $cont;
+    return $restantes;
 }
 
 
@@ -45,7 +67,7 @@ function aumenta_contador(){
     } else {
 
         $contador = $_SESSION['contador'] + 1;
-        $_SESSION['contador'] = htmlspecialchars($contador);
+        $_SESSION['contador'] = $contador;
         //setcookie($cookie_contador, $contador, time() + (86400 * 30), "/");
     }
     

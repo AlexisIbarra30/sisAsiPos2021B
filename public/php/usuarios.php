@@ -56,7 +56,7 @@
 					}else{
 						//si no viene el id, se inserta nuevo registro
 						//$query = "INSERT INTO usuarios (nombre,apellidos,usuario,password,tipo_usuario,programa,fecha_registro) VALUES ('".$_POST['nombre']."','".$_POST['apellidos']."','".$_POST['usuario']."','".$_POST['password']."',0,'".$_POST['programa']."','".$_POST['fecha_registro']."')";
-						$query = "INSERT INTO usuarios (nombre,apellidos,usuario,password,tipo_usuario,programa,fecha_registro) VALUES ('".$_POST['nombre']."','".$_POST['apellidos']."','".$usuario_cif."','".$password_cif."',0,'".$_POST['programa']."','".$_POST['fecha_registro']."')";
+						$query = "INSERT INTO usuarios (nombre,apellidos,usuario,password,tipo_usuario,programa,fecha_registro,correo) VALUES ('".$_POST['nombre']."','".$_POST['apellidos']."','".$usuario_cif."','".$password_cif."',0,'".$_POST['programa']."','".$_POST['fecha_registro']."','".$_POST['correo'].")";
 					}
 
 					mysqli_query($con,$query);

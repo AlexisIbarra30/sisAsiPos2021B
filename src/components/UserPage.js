@@ -38,8 +38,19 @@ export default class UserPage extends React.Component {
             window.location.reload();
         }
     }
+
+    valida_verificacion=()=>{
+        let ver = JSON.parse(sessionStorage.getItem("TOKEN"));
+        if(ver==null){
+            history.push('/verificacion');
+            window.location.reload();
+        }
+    }
+
+
     primerLogin= async()=>{
         this.valida_sesion();
+        this.valida_verificacion();
         let user = JSON.parse(sessionStorage.getItem("USER"));
         let endpoint = `${constantes.PATH_API}usuarios.php?login=${user.id}`;
         let consulta = await fetch(endpoint);
@@ -61,6 +72,10 @@ export default class UserPage extends React.Component {
         }
         
         this.setState(()=>({ready:1}));
+    }
+
+    dosFactores = async()=>{
+
     }
 
     componentDidMount=async()=>{

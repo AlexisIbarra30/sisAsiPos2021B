@@ -46,9 +46,18 @@ export default class AdminPage extends React.Component {
         }
     }
 
+    valida_verificacion=()=>{
+        let ver = JSON.parse(sessionStorage.getItem("TOKEN"));
+        if(ver==null){
+            history.push('/verificacion');
+            window.location.reload();
+        }
+    }
+
     //Validar si es la primer vez que inicia sesión
     primerLogin= async()=>{
         this.valida_sesion();
+        this.valida_verificacion();
         let user = JSON.parse(sessionStorage.getItem("USER"));
         let endpoint = `${constantes.PATH_API}usuarios.php?login=${user.id}`;
         let consulta = await fetch(endpoint);

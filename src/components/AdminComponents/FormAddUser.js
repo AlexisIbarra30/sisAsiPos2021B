@@ -11,6 +11,7 @@ export class FormAddUser extends React.Component{
         apellidos:"",
         usuario:"",
         password:"",
+        correo:"",
         confirm_pass:"",
         programa:"",
         tipo_programa:[],
@@ -19,7 +20,8 @@ export class FormAddUser extends React.Component{
         nError:"",
         aError:"",
         uError:"",
-        pError:""
+        pError:"",
+        cError:"",
     }
 
     //Captura de datos 
@@ -36,6 +38,22 @@ export class FormAddUser extends React.Component{
             nError:mensaje
         }));
     }
+
+    //Captura de datos 
+    onCorreoChange = (e) => {
+        const correo = e.target.value;
+        let mensaje="";
+
+        validaExpres(expres.correos,correo)?mensaje="":
+        mensaje="El correo ingresado debe tener un formato valido. Por ejemplo: correo@gmail.com";
+
+
+        this.setState(() => ({
+            correo:correo,
+            cError:mensaje
+        }));
+    }
+
     onApellidosChange = (e) => {
         const apellidos = e.target.value;
         let mensaje="";
@@ -56,7 +74,7 @@ export class FormAddUser extends React.Component{
             mensaje="";
         }else{
             password.length>0?
-            mensaje="Debe incluir al menos, una minuscula, mayuscula y caracter especial. Longitud minima 8 caracteres.":
+            mensaje="Debe incluir al menos, tres minúsculas, dos mayúsculas, un carácter especial (!@#$&*) y dos dígitos. Longitud mínima de 12 caracteres.":
             mensaje=""
         }
 
@@ -73,9 +91,9 @@ export class FormAddUser extends React.Component{
     onUsuarioChange = (e) => {
         const usuario = e.target.value.trim();
         let mensaje="";
-        let valido = validaUsuario(usuario);
+        let valido = validaExpres(expres.nombres_usuario,usuario);
         /*mensaje="Incluir al menos una: minuscula, mayuscula, punto o guión. Longitud: 8 caracteres.";*/
-        if(valido && usuario.length==8){
+        if(valido && usuario.length>=8){
             mensaje="";
         }else{
             usuario.length>0?
@@ -118,36 +136,45 @@ export class FormAddUser extends React.Component{
             password:this.state.password,
             confirm_pass:this.state.confirm_pass,
             programa:this.state.programa,
-            fecha_registro:moment(new Date).format("YYYY/MM/DD")
+            correo:this.state.correo,
+            fecha_registro:moment(new Date).format("YYYY/MM/DD"),
         }
         
         if(json.nombre.trim()==="" || json.apellidos.trim()==="" || json.usuario.trim()===""||json.password.trim()===""||json.confirm_pass.trim()===""||json.programa===""){
             alert("Por favor no dejar campos en blanco");
         }else{
 
-            if(this.state.password === this.state.confirm_pass){
-                const url = `${constantes.PATH_API}usuarios.php`;
-                fetch(url,{
-                    method:'POST',
-                    body: JSON.stringify(json)
-                })
-                .then(res=>res.text())
-                .then(
-                    (data) =>{
-                        var mensaje="";
-                        console.log(data);
-                        if(data==="correcto"){
-                            mensaje="Agregado correctamente";
-                        }else{
-                            mensaje="Ya existe cuenta para "+this.state.nombre+" "+this.state.apellidos;
+            //       nError:"",
+
+            if (this.state.nError === "" && this.state.aError === "" && this.state.uError === "" && this.state.pError === "" && this.state.cError === ""){
+
+                if(this.state.password === this.state.confirm_pass){
+                    const url = `${constantes.PATH_API}usuarios.php`;
+                    fetch(url,{
+                        method:'POST',
+                        body: JSON.stringify(json)
+                    })
+                    .then(res=>res.text())
+                    .then(
+                        (data) =>{
+                            var mensaje="";
+                            console.log(data);
+                            if(data==="correcto"){
+                                mensaje="Agregado correctamente";
+                            }else{
+                                
+                                mensaje="Ya existe cuenta para "+this.state.nombre+" "+this.state.apellidos;
+                            }
+                            alert(mensaje);
                         }
-                        alert(mensaje);
-                    }
 
-                );
+                    );
 
-            }else{
-                alert("Las contraseñas no coinciden.");
+                }else{
+                    alert("Las contraseñas no coinciden.");
+                }
+            } else {
+                alert("Verifica que los campos sean correctos.");
             }
         }
     }
@@ -209,6 +236,14 @@ export class FormAddUser extends React.Component{
                     </div>
                     
                     <span className='msgErrorForm'>{this.state.aError}</span>
+                </div>
+                <div className="morespace withMessage">
+                    <div className='withMessageContent'>
+                        <label>Correo electrónico:: </label>
+                        <input type='text' id="correo" name="correo" className="text50" onChange={this.onCorreoChange} value={this.state.correo}></input>
+                    </div>
+                    
+                    <span className='msgErrorForm'>{this.state.cError}</span>
                 </div>
                 <div className="morespace withMessage">
                     <div className='withMessageContent'>
