@@ -55,7 +55,7 @@ const FirstLogin = (props) => {
         mensaje="";
     }else{
         pass1.length>0?
-        mensaje="Debe incluir al menos, una minuscula, mayuscula y caracter especial. Longitud minima 8 caracteres.":
+        mensaje="Debe incluir al menos, tres minúsculas, dos mayúsculas, un carácter especial (!@#$&*) y dos dígitos. Longitud mínima de 12 caracteres.":
         mensaje=""
     }
 
@@ -110,6 +110,9 @@ const FirstLogin = (props) => {
               }
               if(data.respuesta=="error update"){
                   alert("Error al actualizar. Intente más tarde.");
+              }
+              if(data.respuesta=="error mismo password"){
+                alert("La contraseña nueva debe ser diferente a la actual. Volver a verificar.")
               }
 
           });

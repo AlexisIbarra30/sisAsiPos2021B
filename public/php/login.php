@@ -4,6 +4,7 @@
 	include_once 'conexion.php';
 	include_once 'cif_aes.php';
 	include_once 'sesion.php';
+	include_once 'mailDosFactores.php';
 
 	
 	/*
@@ -27,7 +28,7 @@
 				//Verifica que no se tengan tres intentos o que ya haya pasado 1 min despues de los 3 intentos
 				// Falta modificar el mensaje de error del lado del frontend, mientras manda el mismo mensaje de error al iniciar sesion			
 				if (!verificar_intentos_hora()){
-					$json[] = array("valido"=>false);
+					$json[] = array("valido"=>false, "motivo"=>"TresIntentos","tiempo"=>get_tiempo_sobrante());
 					echo json_encode($json);
 					break;
 				}
@@ -39,13 +40,13 @@
 				//agregado
 				mysqli_set_charset($con,"utf8");
 
-				//Usuario y password cifrados con AES
+				//Usuario y password cifrados con SHA256
 				$usuario_cif = cifrar($_POST['usuario']);
 				$password_cif = cifrar($_POST['password']);
 
 
 				//$query = "SELECT usuarios.id as id,programas.id as programa_id,nombre,apellidos,usuario,programa_nombre,tipo_usuario,fecha_registro,picture_url from usuarios inner join programas where programas.id = usuarios.programa and usuario='".$_POST['usuario']."' and password ='".$_POST['password']."'";
-				$query = "SELECT usuarios.id as id,programas.id as programa_id,nombre,apellidos,usuario,programa_nombre,tipo_usuario,fecha_registro,picture_url from usuarios inner join programas where programas.id = usuarios.programa and usuario='".$usuario_cif."' and password ='".$password_cif."'";
+				$query = "SELECT usuarios.id as id,programas.id as programa_id,nombre,apellidos,usuario,programa_nombre,tipo_usuario,fecha_registro,picture_url,correo from usuarios inner join programas where programas.id = usuarios.programa and usuario='".$usuario_cif."' and password ='".$password_cif."'";
 				$json = array();
 
 				$res = mysqli_query($con,$query);
@@ -57,7 +58,15 @@
 					$res = mysqli_query($con,$query);
 					if(mysqli_num_rows($res)==0){
 						aumenta_contador();				//Aumenta el contador de numero de intentos
-						$json[] = array("valido"=>false);
+						$intentos = get_intentos_restantes();
+						if ($intentos == 0) {
+							verificar_intentos_hora();
+							$json[] = array("valido"=>false, "motivo"=>"TresIntentos","tiempo"=>get_tiempo_sobrante());
+
+						}else {
+							$json[] = array("valido"=>false,"intentos"=>$intentos);
+						}
+						
 					}
 					else{
 						while($fila=mysqli_fetch_array($res)){
@@ -70,6 +79,7 @@
 							$picture_url = $fila['picture_url'];
 							$valido=true;
 							$json[] = array("id"=>$id,"nombre"=>$nombre,"apellidos"=>$apellidos,"programa_nombre"=>$programa_nombre,"tipo_usuario"=>$tipo_usuario,"programa_id"=>$id_programa,"valido"=>$valido,"picture_url"=>$picture_url);
+							borrar_cookies();
 						}
 					}
 					
@@ -84,9 +94,17 @@
 						$id_programa = $fila['programa_id'];
 						$fecha_registro = $fila['fecha_registro'];
 						$picture_url = $fila['picture_url'];
+
+						$usuario_nom = $fila['usuario'];
+						$correo_nom = $fila['correo'];
+						
 						$valido=true;
-						$json[] = array("id"=>$id,"nombre"=>$nombre,"apellidos"=>$apellidos,"programa_nombre"=>$programa_nombre,"tipo_usuario"=>$tipo_usuario,"programa_id"=>$id_programa,"valido"=>$valido,"fecha_registro"=>$fecha_registro,"picture_url"=>$picture_url);
+						$json[] = array("id"=>$id,"nombre"=>$nombre,"apellidos"=>$apellidos,"programa_nombre"=>$programa_nombre,"tipo_usuario"=>$tipo_usuario,"programa_id"=>$id_programa,"valido"=>$valido,"fecha_registro"=>$fecha_registro,"picture_url"=>$picture_url,"usuario"=>$usuario_nom,"correo"=>$correo_nom);
+						borrar_cookies();
 					}
+
+					enviarCodigo($usuario_cif);
+
 				}
 				mysqli_close($con);
 				echo json_encode($json);

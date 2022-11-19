@@ -31,22 +31,28 @@
 			mysqli_set_charset($con,"utf8");
 
     		$res = mysqli_query($con,$query);
-    		if(mysqli_num_rows($res)>0){
-    			//Existe la cuenta
-    			$query = "UPDATE usuarios SET password='".$n_pass."', first_login=0, lastpass_modif='".$currentDate."' where id='".$id."'";
-                //Generamos consulta y enviamos respuesta
-                if(mysqli_query($con,$query)){
-                    $json = array("respuesta"=>"correcto");
-                }else{
-                    $json = array("respuesta"=>"error update");
-                }
-                echo(json_encode($json));
-	
-    		}else{
-    			//No existe
-                $json = array("respuesta"=>"error password");
-    			echo(json_encode($json));
-    		}	
+			if($a_pass != $n_pass){
+				if(mysqli_num_rows($res)>0){
+					//Existe la cuenta
+					$query = "UPDATE usuarios SET password='".$n_pass."', first_login=0, lastpass_modif='".$currentDate."' where id='".$id."'";
+					//Generamos consulta y enviamos respuesta
+					if(mysqli_query($con,$query)){
+						$json = array("respuesta"=>"correcto");
+					}else{
+						$json = array("respuesta"=>"error update");
+					}
+					echo(json_encode($json));
+		
+				}else{
+					//No existe
+					$json = array("respuesta"=>"error password");
+					echo(json_encode($json));
+				}	
+			}else {
+				$json = array("respuesta"=>"error mismo password");
+				echo(json_encode($json));
+			}
+
 
     		break;
     }

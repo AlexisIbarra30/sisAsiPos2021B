@@ -82,38 +82,50 @@ export default class LoginPage extends React.Component {
                     })
                     .then(response => {
                         const user = response[0];
+                        const intentos = user.intentos;
+                        let mensajeError = "Usuario y/o contraseña incorrecto. Te quedan " + intentos + " intentos.";
+                        let tiempoMensaje = 5000;
                         //Usuario comun
                         if (user.valido === true && user.tipo_usuario === "0") {
                             //Guardamos en el localStorage el usuario
-                            sessionStorage.setItem("USER", JSON.stringify({ "id": user.id, "nombre": user.nombre, "apellidos": user.apellidos, "programa": user.programa_nombre, "programa_id": user.programa_id,"fecha_registro":user.fecha_registro,"picture_url":user.picture_url}));
+                            sessionStorage.setItem("USER", JSON.stringify({ "id": user.id, "nombre": user.nombre, "apellidos": user.apellidos, "programa": user.programa_nombre, "programa_id": user.programa_id,"fecha_registro":user.fecha_registro,"picture_url":user.picture_url,"tipo":user.tipo_usuario,"usuario":user.usuario,"correo":user.correo}));
                             history.push('/user');
                         } else {
                             // Administrador
                             if (user.valido === true && user.tipo_usuario === "1") {
                                 //Guardamos en el localStorage el usuario
-                                sessionStorage.setItem("USER", JSON.stringify({ "id": user.id, "nombre": user.nombre, "apellidos": user.apellidos, "programa": user.programa_nombre, "programa_id": user.programa_id,"fecha_registro":user.fecha_registro,"picture_url":user.picture_url}));
+                                sessionStorage.setItem("USER", JSON.stringify({ "id": user.id, "nombre": user.nombre, "apellidos": user.apellidos, "programa": user.programa_nombre, "programa_id": user.programa_id,"fecha_registro":user.fecha_registro,"picture_url":user.picture_url,"tipo":user.tipo_usuario,"usuario":user.usuario,"correo":user.correo}));
                                 history.push('/admin');
                             } else{
                                 if(user.valido === true && user.tipo_usuario==="2"){
-                                    sessionStorage.setItem("USER", JSON.stringify({ "id": user.id, "nombre": user.nombre, "apellidos": user.apellidos, "programa": user.programa_nombre, "programa_id": user.programa_id,"fecha_registro":user.fecha_registro,"picture_url":user.picture_url}));
+                                    sessionStorage.setItem("USER", JSON.stringify({ "id": user.id, "nombre": user.nombre, "apellidos": user.apellidos, "programa": user.programa_nombre, "programa_id": user.programa_id,"fecha_registro":user.fecha_registro,"picture_url":user.picture_url,"tipo":user.tipo_usuario,"usuario":user.usuario,"correo":user.correo}));
                                     history.push('/teach');
                                 }else {
                                     if(user.valido ===true && user.tipo_usuario==="Alumno"){
-                                        sessionStorage.setItem("USER", JSON.stringify({ "id": user.id, "nombre": user.nombre, "apellidos": user.apellidos, "programa": user.programa_nombre, "programa_id": user.programa_id,"picture_url":user.picture_url}));
+                                        sessionStorage.setItem("USER", JSON.stringify({ "id": user.id, "nombre": user.nombre, "apellidos": user.apellidos, "programa": user.programa_nombre, "programa_id": user.programa_id,"picture_url":user.picture_url,"tipo":user.tipo_usuario,"usuario":user.usuario,"correo":user.correo}));
                                         history.push('/alum');
                                     }else{
                                         // Limpiamos captcha
                                         //recaptchaRef.current.reset();
+
+                                        /*
+                                        Si el motivo del error es que se sobrepaso el numero de intentos, se cambia el mensaje de error
+                                        */
+                                        if(user.valido === false && user.motivo === "TresIntentos"){
+                                            mensajeError = "Has llegado al límite de 3 intentos. Intenta de nuevo en " + user.tiempo + " segundos";
+                                            tiempoMensaje = user.tiempo * 1000;
+                                        }
+
                                         this.setState(() => ({
                                             //captcha: false,
-                                            error: "Usuario y/o contraseña incorrecto",
+                                            error: mensajeError,
                                             ready:true
                                         }));
                                         setTimeout(() => {
                                             this.setState(() => ({
                                                 error: undefined
                                             }));
-                                        }, 3000)
+                                        }, tiempoMensaje)
                                     }
                                     
                                 
@@ -154,6 +166,9 @@ export default class LoginPage extends React.Component {
             }, 3000)
         }
     }
+
+
+
 
     render() {
         return (

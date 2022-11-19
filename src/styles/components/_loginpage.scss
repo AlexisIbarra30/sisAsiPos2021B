@@ -96,6 +96,67 @@
     box-shadow: 3px 3px 5px gray;
 }
 
+.loginButton2 {
+    margin-top: 1rem;
+    width: 90%;
+    height: 35px;
+    margin-bottom: 1rem;
+    border: 0.1rem solid #2EA44F;
+    border-radius: .7rem;
+    background-image: linear-gradient(to right, #2EA44F, darken(#2EA44F, .5));
+    color: whitesmoke;
+    font-size: 1.4rem;
+}
+
+.loginButton2:focus {
+    outline: none;
+}
+
+.loginButton2:hover {
+    box-shadow: 3px 3px 5px gray;
+}
+
+.sendButton {
+    margin-top: 1rem;
+    width: 80%;
+    height: 35px;
+    margin-bottom: 1rem;
+    border: 0.1rem solid #f0ad4e;
+    border-radius: .7rem;
+    background-image: linear-gradient(to right, #f0ad4e, darken(#f0ad4e, .5));
+    color: whitesmoke;
+    font-size: 1.4rem;
+}
+
+.sendButton:focus {
+    outline: none;
+}
+
+.sendButton:hover {
+    box-shadow: 3px 3px 5px gray;
+}
+
+.cancelVerButton {
+    margin-top: 1rem;
+    width: 90%;
+    height: 35px;
+    margin-bottom: 1rem;
+    border: 0.1rem solid #d9534f;
+    border-radius: .7rem;
+    background-image: linear-gradient(to right, #d9534f, darken(#d9534f, .5));
+    color: whitesmoke;
+    font-size: 1.4rem;
+}
+
+.cancelVerButton:focus {
+    outline: none;
+}
+
+.cancelVerButton:hover {
+    box-shadow: 3px 3px 5px gray;
+}
+
+
 .recaptcha {
     width: 272px;
 }
@@ -130,6 +191,25 @@
     color: red;
 }
 
+.optionContainer .msgDosFactores{
+    width:98%;
+    margin: 0.5rem auto;
+    line-height:12px;
+    display: block;
+    font-size: 1.25rem;
+    text-align: center;
+    color: '#6B6B6B';
+}
+
+
+.formDobleFactor-buttons{
+    display: flex;
+    justify-content: space-around;
+    margin:1rem 0;
+}
+.formDobleFactor-buttons > *{
+    width:35%;
+}
 
 @media screen and (max-width:630px){
     .loginContainer{
