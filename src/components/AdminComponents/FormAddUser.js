@@ -24,6 +24,23 @@ export class FormAddUser extends React.Component{
         cError:"",
     }
 
+    //Limpiar state
+    limpiarState=()=>{
+        this.setState(()=>({
+            nombre:"",
+            apellidos:"",
+            usuario:"",
+            password:"",
+            correo:"",
+            confirm_pass:"",
+            programa:"",
+            nError:"",
+            aError:"",
+            uError:"",
+            pError:"",
+            cError:"",
+        }));
+    }
     //Captura de datos 
     onNombreChange = (e) => {
         const nombre = e.target.value;
@@ -158,14 +175,34 @@ export class FormAddUser extends React.Component{
                     .then(
                         (data) =>{
                             var mensaje="";
-                            console.log(data);
                             if(data==="correcto"){
                                 mensaje="Agregado correctamente";
+                                //Escribimos en el log
+                                //Escribimos la actividad en un log
+                                let options = {weekday: "long", year: "numeric", month: "long", day: "numeric"}
+                                let user = JSON.parse(sessionStorage.getItem("USER"));
+                                let registro = {
+                                    "usuario":user.nombre+" "+user.apellidos,
+                                    "programa":user.programa,
+                                    "accion":"Alta de usuario",
+                                    "fecha":new Date().toLocaleDateString("es-ES", options)+" - "+new Date().toLocaleTimeString(),
+                                    "extras":[`Nombre: ${json.nombre+' '+json.apellidos}`,`Correo:${json.correo}`]
+                                }
+
+                                const url = `${constantes.PATH_API}registraLog.php`;
+                                fetch(url,{
+                                    method:'POST',
+                                    body: JSON.stringify(registro)
+                                }).then(resp =>resp.text());
+
+                                //Fin del log
+                                this.limpiarState();
                             }else{
                                 
                                 mensaje="Ya existe cuenta para "+this.state.nombre+" "+this.state.apellidos;
                             }
                             alert(mensaje);
+                            
                         }
 
                     );

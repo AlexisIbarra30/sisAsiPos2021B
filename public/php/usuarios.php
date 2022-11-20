@@ -42,7 +42,7 @@
 
 				//verificamos que no exista ya el usuario (ver si no se repite el nombre o el usuario)
 				//$query = "SELECT * from usuarios where nombre like '".$_POST['nombre']."' and apellidos like '".$_POST['apellidos']."' or usuario like '".$_POST['usuario']."'";
-				$query = "SELECT * from usuarios where nombre like '".$_POST['nombre']."' and apellidos like '".$_POST['apellidos']."' or usuario like '".$usuario_cif."'";
+				$query = "SELECT * from usuarios where nombre like '".$_POST['nombre']."' and apellidos like '".$_POST['apellidos']."' and id_estatus=1 or usuario like '".$usuario_cif."'";
 				$res = mysqli_query($con,$query);
 
 				if(mysqli_num_rows($res)==0){
@@ -56,7 +56,7 @@
 					}else{
 						//si no viene el id, se inserta nuevo registro
 						//$query = "INSERT INTO usuarios (nombre,apellidos,usuario,password,tipo_usuario,programa,fecha_registro) VALUES ('".$_POST['nombre']."','".$_POST['apellidos']."','".$_POST['usuario']."','".$_POST['password']."',0,'".$_POST['programa']."','".$_POST['fecha_registro']."')";
-						$query = "INSERT INTO usuarios (nombre,apellidos,usuario,password,tipo_usuario,programa,fecha_registro,correo) VALUES ('".$_POST['nombre']."','".$_POST['apellidos']."','".$usuario_cif."','".$password_cif."',0,'".$_POST['programa']."','".$_POST['fecha_registro']."','".$_POST['correo'].")";
+						$query = "INSERT INTO usuarios (nombre,apellidos,usuario,password,tipo_usuario,programa,fecha_registro,correo) VALUES ('".$_POST['nombre']."','".$_POST['apellidos']."','".$usuario_cif."','".$password_cif."',0,'".$_POST['programa']."','".$_POST['fecha_registro']."','".$_POST['correo']."')";
 					}
 
 					mysqli_query($con,$query);

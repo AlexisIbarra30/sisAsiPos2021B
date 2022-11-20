@@ -93,8 +93,8 @@ function validarCodigo($usuario, $codigo){
             mysqli_close($con);
             return array(true, "Correcto");
         }
+        mysqli_close($con); 
         return array(false, "El código ingresado ya expiro. Da clic en 'Volver a enviar'");
-        mysqli_close($con);   
     }
 
 }

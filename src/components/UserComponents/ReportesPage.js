@@ -106,7 +106,7 @@ class ReportesPage extends React.Component {
         //fondo: #2D5438
         //texto: #FFFFFF
         doc.setFontSize(18);
-        doc.text(`Cordinacion de Estudios Avanzados`, 50,50);
+        doc.text(`Coordinacion de Estudios Avanzados`, 50,50);
         doc.text(`Registro de asistencias del periodo ${moment(this.state.startDate).format("DD/MM/YYYY")} al ${moment(this.state.endDate).format("DD/MM/YYYY")}`, 20,60);
         doc.setFontSize(10);
         doc.text(`Reporte por: ${this.state.nombre} ${this.state.apellidos} - ${this.state.programa} `,15,67);

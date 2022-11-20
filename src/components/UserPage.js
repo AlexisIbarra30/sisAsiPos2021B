@@ -63,10 +63,8 @@ export default class UserPage extends React.Component {
         //Validar ultima fecha de cambio de contraseña
         if(this.state.firstLogin==0){
             if(currentDate>lp){
-                console.log(currentDate+">"+lp);
                 this.setState(()=>({firstLogin:1,mensaje:0}));
             }else{
-                console.log(lp+">"+currentDate);
                 this.setState(()=>({firstLogin:0,mensaje:1,showMenu:1}));
             }
         }
@@ -97,7 +95,7 @@ export default class UserPage extends React.Component {
                             <MenuItem renderHandler={this.renderHandler} Component={RegisterPage} titulo="Cargar Archivo Asistencias" />
                             <MenuItem renderHandler={this.renderHandler} Component={FormAddAssist} titulo="Registrar Asistencia" />
                             <MenuItem renderHandler={this.renderHandler} Component={this.muestraForm} titulo="Grupos y Alumnos"/>
-                            <MenuItem renderHandler={this.renderHandler} Component={ReportesPage} titulo="Generar Reportes" />
+                            <MenuItem renderHandler={this.renderHandler} Component={ReportesPage2} titulo="Generar Reportes" />
                         </nav>
                         <div className='Panel'>
                             <this.state.renderComponent/>

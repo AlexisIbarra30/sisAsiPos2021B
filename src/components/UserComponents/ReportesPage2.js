@@ -9,6 +9,7 @@ import DatePicker from "react-datepicker";
 import { registerLocale, setDefaultLocale} from  "react-datepicker";
 import es from 'date-fns/locale/es';
 import {subDays} from 'date-fns';
+import { sha256 } from 'js-sha256';
 
 
 
@@ -45,7 +46,6 @@ class ReportesPage2 extends React.Component {
         });
         
         let url = `${constantes.PATH_API}total_horas2.php?${json.toString()}`;
-        console.log(url)
         // Lanzamos el fetch para obtener la lista de alumnos
         fetch(url, {
             method: 'GET',
@@ -53,7 +53,6 @@ class ReportesPage2 extends React.Component {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 this.setState({alumnos:data})
             });
     }
@@ -103,17 +102,18 @@ class ReportesPage2 extends React.Component {
         //fondo: #2D5438
         //texto: #FFFFFF
         doc.setFontSize(18);
-        doc.text(`Cordinacion de Estudios Avanzados`, 50,50);
+        doc.text(`Coordinacion de Estudios Avanzados`, 50,50);
         doc.text(`Registro de asistencias del periodo ${moment(this.state.startDate).format("DD/MM/YYYY")} al ${moment(this.state.endDate).format("DD/MM/YYYY")}`, 20,60);
         doc.setFontSize(10);
-        doc.text(`Reporte por: ${this.state.nombre} ${this.state.apellidos} - ${this.state.programa} `,15,67);
+        doc.text(`Reporte por: ${this.state.nombre} ${this.state.apellidos} - ${this.state.programa}`,15,70);
+        doc.text(`Fecha: ${new Date().toLocaleDateString("es-ES", {weekday: "long", year: "numeric", month: "long", day: "numeric"})} - ${new Date().toLocaleTimeString()}`,15,75);
         doc.setFontSize(10);
         //doc.cell(5, 70, 200, 300,'  Nombre        Apellidos            Fecha Inicio      Fecha Final      Horas Totales  ', 1);
-        doc.cell(15,70,45,10,'Nombre',5,'c');
-        doc.cell(15,70,45,10,'Apellidos',5,'c');
-        doc.cell(15,70,30,10,'Fecha Inicio',5,'c');
-        doc.cell(15,70,30,10,'Fecha Final',5,'c');
-        doc.cell(15,70,30,10,'Horas Totales',5,'c');
+        doc.cell(15,80,45,10,'Nombre',5,'c');
+        doc.cell(15,80,45,10,'Apellidos',5,'c');
+        doc.cell(15,80,30,10,'Fecha Inicio',5,'c');
+        doc.cell(15,80,30,10,'Fecha Final',5,'c');
+        doc.cell(15,80,30,10,'Horas Totales',5,'c');
         y = 90;
         doc.setFontSize(9);
         this.state.alumnos.forEach((asistencia, index) => {
@@ -141,8 +141,51 @@ class ReportesPage2 extends React.Component {
             
             
         });
+        //Generamos el SHA256 para integridad del documento
+        let cadena = doc.output('arraybuffer');
+        let integridad = sha256.create();
+        let hash256 = integridad.update(cadena);
+        let hashHex = hash256.hex();
 
-        doc.save("Asistencias.pdf");
+        //Recorremos cada pagina del documento
+        /*let paginas = doc.internal.getNumberOfPages();
+        for(let i=1;i<=paginas;i++){
+            doc.setPage(i);
+            doc.text(`Hash SHA-256: ${integridad.hex()}`,15,285);
+        }*/
+        
+        //doc.output('dataurlnewwindow',{filename:`${hashHex}`});
+
+        //Guardamos el PDF
+        doc.save(`${hashHex}.pdf`);
+        //Guardamos el hash en un archivo txt
+        let nombreArchivo = `${moment(new Date()).format("YYYY-MM-DD")} AT ${new Date().toLocaleTimeString()}.txt`;
+        let boton = document.createElement('a');
+        boton.style.display = 'none';
+        boton.setAttribute('href','data:text/plan;charset:utf-8,'+encodeURIComponent(hashHex));
+        boton.setAttribute('download',nombreArchivo);
+        document.body.appendChild(boton);
+        boton.click();  
+        document.body.removeChild(boton);
+
+
+        //Escribimos la actividad en un log
+        let options = {weekday: "long", year: "numeric", month: "long", day: "numeric"}
+        let user = JSON.parse(sessionStorage.getItem("USER"));
+        let registro = {
+            "usuario":user.nombre+" "+user.apellidos,
+            "programa":user.programa,
+            "accion":"Genera reporte",
+            "fecha":new Date().toLocaleDateString("es-ES", options)+" - "+new Date().toLocaleTimeString(),
+            "extras":[`Fecha:${this.state.startDate} - ${this.state.endDate}`,`Hash:${hashHex}`]
+        }
+
+        const url = `${constantes.PATH_API}registraLog.php`;
+        fetch(url,{
+            method:'POST',
+            body: JSON.stringify(registro)
+        }).then(resp =>resp.text());
+
     }
     
 

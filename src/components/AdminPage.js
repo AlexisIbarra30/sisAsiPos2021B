@@ -70,10 +70,8 @@ export default class AdminPage extends React.Component {
         //Validar ultima fecha de cambio de contraseña
         if(this.state.firstLogin==0){
             if(currentDate>lp){
-                console.log(currentDate+">"+lp);
                 this.setState(()=>({firstLogin:1,mensaje:0}));
             }else{
-                console.log(lp+">"+currentDate);
                 this.setState(()=>({firstLogin:0,mensaje:1,showMenu:1}));
             }
         }
