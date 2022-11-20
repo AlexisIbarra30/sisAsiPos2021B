@@ -177,7 +177,6 @@ export class FormAddUser extends React.Component{
                             var mensaje="";
                             if(data==="correcto"){
                                 mensaje="Agregado correctamente";
-                                //Escribimos en el log
                                 //Escribimos la actividad en un log
                                 let options = {weekday: "long", year: "numeric", month: "long", day: "numeric"}
                                 let user = JSON.parse(sessionStorage.getItem("USER"));
@@ -194,8 +193,8 @@ export class FormAddUser extends React.Component{
                                     method:'POST',
                                     body: JSON.stringify(registro)
                                 }).then(resp =>resp.text());
-
                                 //Fin del log
+                                
                                 this.limpiarState();
                             }else{
                                 

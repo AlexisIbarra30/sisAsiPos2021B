@@ -25,7 +25,7 @@ export class FormListUser extends React.Component{
         
     }
 
-    eliminarUser=(e,id)=>{
+    eliminarUser=(e,id,usuario)=>{
         let c = window.confirm("¿Desea eliminar el usuario?");
         if(c){
             const url = `${constantes.PATH_API}usuarios.php?id=`+id;
@@ -36,6 +36,23 @@ export class FormListUser extends React.Component{
             .then(
                 data=>{
                     this.componentDidMount();
+                    //Escribimos la actividad en el log
+                    let options = {weekday: "long", year: "numeric", month: "long", day: "numeric"}
+                    let user = JSON.parse(sessionStorage.getItem("USER"));
+                    let registro = {
+                        "usuario":user.nombre+" "+user.apellidos,
+                        "programa":user.programa,
+                        "accion":"Eliminacion de usuario",
+                        "fecha":new Date().toLocaleDateString("es-ES", options)+" - "+new Date().toLocaleTimeString(),
+                        "extras":[`Nombre: ${usuario.nombre+' '+usuario.apellidos}`]
+                    }
+
+                    const url = `${constantes.PATH_API}registraLog.php`;
+                    fetch(url,{
+                        method:'POST',
+                        body: JSON.stringify(registro)
+                    }).then(resp =>resp.text());
+                    //Fin de escritura del log
                     alert("Eliminado correctamente");
                 }
             );
@@ -71,7 +88,7 @@ export class FormListUser extends React.Component{
                                                         <h3> {user.fecha_registro} </h3>
                                                         <h3> {user.programa_nombre} </h3>
                                                         <div className="buttonBorrar">
-                                                            {this.state.currentUser.nombre!=user.nombre&&this.state.currentUser!=user.apellidos?<button  onClick={(e)=>this.eliminarUser(e,user.id)}>Borrar</button>:<span>Sesión actual</span>}
+                                                            {this.state.currentUser.nombre!=user.nombre&&this.state.currentUser!=user.apellidos?<button  onClick={(e)=>this.eliminarUser(e,user.id,user)}>Borrar</button>:<span>Sesión actual</span>}
                                                         </div>
                                                     </div>
                                                 );
