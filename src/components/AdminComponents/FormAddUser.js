@@ -175,6 +175,7 @@ export class FormAddUser extends React.Component{
                     .then(
                         (data) =>{
                             var mensaje="";
+                            console.log(data);
                             if(data==="correcto"){
                                 mensaje="Agregado correctamente";
                                 //Escribimos la actividad en un log

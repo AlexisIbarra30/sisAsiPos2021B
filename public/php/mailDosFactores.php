@@ -15,25 +15,43 @@ $mail = new PHPMailer(true);
 $mail->isSMTP();
 $mail->Host = 'smtp.gmail.com';
 $mail->SMTPAuth = true;
-$mail->Username = 'asistencia.seguridad.2022b@gmail.com';
-$mail->Password = 'vyaehnewkbrzrrws';
+$mail->Username = '';
+$mail->Password = '';
 $mail->SMTPSecure = 'ssl';
+$mail->CharSet = 'UTF-8';
 $mail->Port = 465;
 
 
 
 
 function enviarCodigo($usuario){
+    
     global $mail;
     $correo = getCorreo($usuario);
     $codigo = generarCodigo($usuario);
 
-    $mail->setFrom("asistencia.seguridad.2022b@gmail.com");
+    $mail->setFrom("asistencia.seguridad.2022b2@gmail.com");
     $mail->addAddress($correo);
     $mail->isHTML(true);
 
     $mail->Subject = "Código de verificación";
-    $mail->Body = "Tu código de verificación es: ".$codigo. ". Este código tiene un tiempo de validez de 2 minutos";
+    $mail->Body = "<p>Tu código de verificación es: ".$codigo. ".<br>Este código tiene un tiempo de validez de 2 minutos</p>";
+
+    $mail->send();
+    
+}
+
+function enviarCredenciales($usuario, $nombre_usuario, $contrasena){
+    global $mail;
+    $correo = getCorreo($usuario);
+
+
+    $mail->setFrom("asistencia.seguridad.2022b2@gmail.com");
+    $mail->addAddress($correo);
+    $mail->isHTML(true);
+
+    $mail->Subject = "Credenciales temporales";
+    $mail->Body = "<p>Tu nombre de usuario es: ".$nombre_usuario. ".<br>Tu contraseña es: ".$contrasena. ".<br>Esta contraseña es temporal, tendrás que cambiarla la primera vez que ingreses al sistema</p>";
 
     $mail->send();
 }

@@ -117,7 +117,7 @@ export default class LoginPage extends React.Component {
                                         }
 
                                         this.setState(() => ({
-                                            //captcha: false,
+                                            captcha: false,
                                             error: mensajeError,
                                             ready:true
                                         }));
