@@ -68,28 +68,25 @@
 
 					mysqli_query($con,$query);
 					enviarCredenciales($usuario_cif, $_POST['usuario'], $_POST['password']);
-					$estatus = utf8_encode("correcto");
-					echo ($estatus);	
+
+					echo json_encode(array("respuesta"=>"correcto"));	
 				}else{
 					if(isset($_POST['id'])){
 						//Si viene el id, significa que se actualiza el registro
 						//$query = "UPDATE usuarios SET nombre= '".$_POST['nombre']."',apellidos='".$_POST['apellidos']."',usuario = '".$_POST['usuario']."',password='".$_POST['password']."', tipo_usuario = '".$_POST['tipo_usuario']."', programa='".$_POST['programa']."' where id=".$_POST['id'];
 						$query = "UPDATE usuarios SET nombre= '".$_POST['nombre']."',apellidos='".$_POST['apellidos']."',usuario = '".$usuario_cif."',password='".$password_cif."', tipo_usuario = '".$_POST['tipo_usuario']."', programa='".$_POST['programa']."' where id=".$_POST['id'];
 						mysqli_query($con,$query);
-						$estatus = utf8_encode("correcto");
-						echo ($estatus);	
+						echo json_encode(array("respuesta"=>"correcto"));		
 					}else{
 						//si no viene el id, se inserta nuevo registro
-						$estatus = utf8_encode("registro reperido");
-						echo ($estatus);
+						echo json_encode(array("respuesta"=>"registro repetido"));	
 					}
 				}
 
 				
 			}
 			else{
-				$estatus = utf8_encode("Campos vacios");
-				echo ($estatus);
+				echo json_encode(array("respuesta"=>"campos vacios"));	
 			}	
 			
 			break;
@@ -142,8 +139,7 @@
 				$query = "UPDATE usuarios SET id_estatus=2 where id=".$_GET['id'];
 				mysqli_query($con,$query);
 				mysqli_close($con);
-				$estatus = utf8_encode("correcto");
-				echo ($estatus);	
+				echo("correcto");	
 			}
 			else if(isset($_GET['login'])){
 				//Validar primer login y ultima fecha de cambio

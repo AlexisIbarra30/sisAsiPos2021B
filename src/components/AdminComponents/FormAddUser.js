@@ -171,12 +171,11 @@ export class FormAddUser extends React.Component{
                         method:'POST',
                         body: JSON.stringify(json)
                     })
-                    .then(res=>res.text())
+                    .then(res=>res.json())
                     .then(
                         (data) =>{
                             var mensaje="";
-                            console.log(data);
-                            if(data==="correcto"){
+                            if(data.respuesta==="correcto"){
                                 mensaje="Agregado correctamente";
                                 //Escribimos la actividad en un log
                                 let options = {weekday: "long", year: "numeric", month: "long", day: "numeric"}
