@@ -87,11 +87,30 @@ export default class DosFactores extends React.Component {
             })
             .then(response => {
                 const resp = response[0];
+                let mensajeError = "Error";
+                let tiempoMensaje = 5000;
                 if (resp.valido === true) {
                     alert("El correo con el nuevo codigo de verificacion se ha enviado a tu correo electronico: " + this.state.correo.substring(0,4) + "****" + ".com");
                     history.push('/verificacion');
                     window.location.reload();
                 } 
+                else{
+
+                    if(resp.valido === false && resp.motivo === "TresIntentos"){
+                        mensajeError = "Has llegado al límite de 3 intentos. Intenta de nuevo en " + resp.tiempo + " segundos";
+                        tiempoMensaje = resp.tiempo * 1000;
+                    }
+
+                    this.setState(() => ({
+                        error: mensajeError,
+                        ready:true
+                    }));
+                    setTimeout(() => {
+                        this.setState(() => ({
+                            error: undefined
+                        }));
+                    }, tiempoMensaje)
+                }
             });
         
     }
@@ -136,7 +155,13 @@ export default class DosFactores extends React.Component {
                     })
                     .then(response => {
                         const verif = response[0];
+                        const intentos = verif.intentos;
                         let mensajeError = verif.motivo;
+                        if(intentos != null){
+                            mensajeError = mensajeError + ". Te quedan " + intentos + " intentos.";
+                        }
+                        
+                        let tiempoMensaje = 5000;
                         //Usuario comun
                         //if (user.valido === true && user.tipo_usuario === "0") {
                         if (verif.valido === true && this.state.user.tipo == "0") {
@@ -165,6 +190,11 @@ export default class DosFactores extends React.Component {
                                         history.push('/alum');
                                     }else{
 
+                                        if(verif.valido === false && verif.motivo === "TresIntentos"){
+                                            mensajeError = "Has llegado al límite de 3 intentos. Intenta de nuevo en " + verif.tiempo + " segundos";
+                                            tiempoMensaje = verif.tiempo * 1000;
+                                        }
+
                                         this.setState(() => ({
                                             error: mensajeError,
                                             ready:true
@@ -173,7 +203,7 @@ export default class DosFactores extends React.Component {
                                             this.setState(() => ({
                                                 error: undefined
                                             }));
-                                        }, 5000)
+                                        }, tiempoMensaje)
                                     }
                                 }
                             }

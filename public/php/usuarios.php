@@ -2,6 +2,7 @@
 	header('Access-Control-Allow-Origin:*');
 	include_once 'conexion.php';
 	include_once 'cif_aes.php';
+	include_once 'mailDosFactores.php';
 
 	/*
 		Para VALIDAR un usuario: (usuario, password,tipo_usuario)
@@ -25,16 +26,19 @@
 
 		
 		//POST para agregar y actualizar
+		
 		case 'POST':
-
 			$_POST = json_decode(file_get_contents('php://input'),true);
 			$json = array();
 
 			if(isset($_POST['nombre']) and isset($_POST['apellidos']) and isset($_POST['usuario']) and isset($_POST['password']) ){
+				
 				$con = conectar();
 
 				//agregado
 				mysqli_set_charset($con,"utf8");
+	
+				
 
 				//Usuario y password cifrados con AES
 				$usuario_cif = cifrar($_POST['usuario']);
@@ -43,8 +47,11 @@
 				//verificamos que no exista ya el usuario (ver si no se repite el nombre o el usuario)
 				//$query = "SELECT * from usuarios where nombre like '".$_POST['nombre']."' and apellidos like '".$_POST['apellidos']."' or usuario like '".$_POST['usuario']."'";
 				$query = "SELECT * from usuarios where nombre like '".$_POST['nombre']."' and apellidos like '".$_POST['apellidos']."' and id_estatus=1 or usuario like '".$usuario_cif."'";
+				
+				
+				
 				$res = mysqli_query($con,$query);
-
+				
 				if(mysqli_num_rows($res)==0){
 
 					$query="";
@@ -60,24 +67,29 @@
 					}
 
 					mysqli_query($con,$query);
-					echo ("correcto");	
+					enviarCredenciales($usuario_cif, $_POST['usuario'], $_POST['password']);
+					$estatus = utf8_encode("correcto");
+					echo ($estatus);	
 				}else{
 					if(isset($_POST['id'])){
 						//Si viene el id, significa que se actualiza el registro
 						//$query = "UPDATE usuarios SET nombre= '".$_POST['nombre']."',apellidos='".$_POST['apellidos']."',usuario = '".$_POST['usuario']."',password='".$_POST['password']."', tipo_usuario = '".$_POST['tipo_usuario']."', programa='".$_POST['programa']."' where id=".$_POST['id'];
 						$query = "UPDATE usuarios SET nombre= '".$_POST['nombre']."',apellidos='".$_POST['apellidos']."',usuario = '".$usuario_cif."',password='".$password_cif."', tipo_usuario = '".$_POST['tipo_usuario']."', programa='".$_POST['programa']."' where id=".$_POST['id'];
 						mysqli_query($con,$query);
-						echo ("correcto");	
+						$estatus = utf8_encode("correcto");
+						echo ($estatus);	
 					}else{
 						//si no viene el id, se inserta nuevo registro
-						echo ("registro reperido");
+						$estatus = utf8_encode("registro reperido");
+						echo ($estatus);
 					}
 				}
 
 				
 			}
 			else{
-				echo json_encode("Campos vacios");
+				$estatus = utf8_encode("Campos vacios");
+				echo ($estatus);
 			}	
 			
 			break;
@@ -130,7 +142,8 @@
 				$query = "UPDATE usuarios SET id_estatus=2 where id=".$_GET['id'];
 				mysqli_query($con,$query);
 				mysqli_close($con);
-				echo('correcto');
+				$estatus = utf8_encode("correcto");
+				echo ($estatus);	
 			}
 			else if(isset($_GET['login'])){
 				//Validar primer login y ultima fecha de cambio

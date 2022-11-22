@@ -19,7 +19,6 @@
 	switch($_SERVER['REQUEST_METHOD']){
 	 	//Verificar que el usuario existe y devolver sus datos
 	 	case 'POST':
-
 	 		$_POST = json_decode(file_get_contents('php://input'),true);
 	 		if(isset($_POST['usuario']) and isset($_POST['password'])){
 
@@ -102,8 +101,9 @@
 						$json[] = array("id"=>$id,"nombre"=>$nombre,"apellidos"=>$apellidos,"programa_nombre"=>$programa_nombre,"tipo_usuario"=>$tipo_usuario,"programa_id"=>$id_programa,"valido"=>$valido,"fecha_registro"=>$fecha_registro,"picture_url"=>$picture_url,"usuario"=>$usuario_nom,"correo"=>$correo_nom);
 						borrar_cookies();
 					}
-
+					
 					enviarCodigo($usuario_cif);
+					
 
 				}
 				mysqli_close($con);
